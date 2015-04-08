@@ -1,0 +1,32 @@
+<?php
+
+namespace OrderIT\Bundle\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Sector
+ *
+ * @ORM\Table(name="sector", uniqueConstraints={@ORM\UniqueConstraint(name="sector_UNIQUE", columns={"sector"})})
+ * @ORM\Entity
+ */
+class Sector
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_sector", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idSector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sector", type="string", length=3, nullable=false)
+     */
+    private $sector;
+
+
+}

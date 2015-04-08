@@ -1,0 +1,53 @@
+<?php
+
+namespace OrderIT\Bundle\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Localuser
+ *
+ * @ORM\Table(name="localuser")
+ * @ORM\Entity
+ */
+class Localuser
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_user", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idUser;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="group_id_group", type="integer", nullable=true)
+     */
+    private $groupIdGroup;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vorname", type="string", length=45, nullable=true)
+     */
+    private $vorname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=45, nullable=true)
+     */
+    private $mail;
+
+
+}

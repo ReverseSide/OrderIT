@@ -6,7 +6,7 @@
 
     <!--
     <services>
-        <service id="order_it_order.example" class="OrderIT\OrderBundle\Example">
+        <service id="order.example" class="OrderIT\Bundle\OrderBundle\Example">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>

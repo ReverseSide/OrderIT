@@ -1,6 +1,6 @@
 <?php
 
-namespace OrderIT\OrderBundle\Controller;
+namespace OrderIT\Bundle\OrderBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

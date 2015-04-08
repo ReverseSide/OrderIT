@@ -1,0 +1,67 @@
+<?php
+
+namespace OrderIT\Bundle\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Vendor
+ *
+ * @ORM\Table(name="vendor")
+ * @ORM\Entity
+ */
+class Vendor
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_vendor", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idVendor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="postofficebox", type="integer", nullable=true)
+     */
+    private $postofficebox;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adress", type="string", length=45, nullable=false)
+     */
+    private $adress;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="postcode", type="integer", nullable=false)
+     */
+    private $postcode;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="telephone", type="integer", nullable=true)
+     */
+    private $telephone;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="fax", type="integer", nullable=true)
+     */
+    private $fax;
+
+
+}

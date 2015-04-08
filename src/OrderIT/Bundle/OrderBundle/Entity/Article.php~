@@ -1,0 +1,53 @@
+<?php
+
+namespace OrderIT\Bundle\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Article
+ *
+ * @ORM\Table(name="article")
+ * @ORM\Entity
+ */
+class Article
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_article", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idArticle;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="numero_article", type="integer", nullable=true)
+     */
+    private $numeroArticle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=45, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Listing", mappedBy="articleArticle")
+     */
+    private $listingListing;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->listingListing = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Demand list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Iddemand</th>
+                <th>Numerodemand</th>
+                <th>Referencedate</th>
+                <th>Observation</th>
+                <th>Hfield</th>
+                <th>Amount</th>
+                <th>Creaiduser</th>
+                <th>Validrespiduser</th>
+                <th>Validaccouiduser</th>
+                <th>Creademand</th>
+                <th>Moddemand</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('demand_show', { 'id': entity.idDemand }) }}">{{ entity.idDemand }}</a></td>
+                <td>{{ entity.numeroDemand }}</td>
+                <td>{% if entity.referenceDate %}{{ entity.referenceDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.observation }}</td>
+                <td>{{ entity.hfield }}</td>
+                <td>{{ entity.amount }}</td>
+                <td>{{ entity.creaIdUser }}</td>
+                <td>{{ entity.validRespIdUser }}</td>
+                <td>{{ entity.validAccouIdUser }}</td>
+                <td>{% if entity.creaDemand %}{{ entity.creaDemand|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.modDemand %}{{ entity.modDemand|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('demand_show', { 'id': entity.idDemand }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('demand_edit', { 'id': entity.idDemand }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('demand_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

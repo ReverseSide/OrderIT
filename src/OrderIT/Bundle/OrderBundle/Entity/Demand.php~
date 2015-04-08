@@ -1,0 +1,195 @@
+<?php
+
+namespace OrderIT\Bundle\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Demand
+ *
+ * @ORM\Table(name="demand", indexes={@ORM\Index(name="fk_order_vendor_idx", columns={"vendor_id_vendor"}), @ORM\Index(name="fk_order_delivery1_idx", columns={"delivery_id_delivery"}), @ORM\Index(name="fk_order_status1_idx", columns={"status_idstatus"}), @ORM\Index(name="fk_demand_costcentre1_idx", columns={"costcentre_id_costcentre"}), @ORM\Index(name="fk_demand_proco1_idx", columns={"proco_id_proco"}), @ORM\Index(name="fk_demand_oracle1_idx", columns={"oracle_id_oracle"}), @ORM\Index(name="fk_demand_project1_idx", columns={"project_id_project"}), @ORM\Index(name="fk_demand_sector1_idx", columns={"sector_id_sector"}), @ORM\Index(name="fk_demand_labo1_idx", columns={"labo_id_labo"}), @ORM\Index(name="fk_demand_reference1_idx", columns={"reference_id_reference"})})
+ * @ORM\Entity
+ */
+class Demand
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_demand", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idDemand;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_demand", type="decimal", precision=8, scale=0, nullable=false)
+     */
+    private $numeroDemand;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="reference_date", type="date", nullable=true)
+     */
+    private $referenceDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observation", type="text", nullable=true)
+     */
+    private $observation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Hfield", type="string", length=1, nullable=true)
+     */
+    private $hfield;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="amount", type="float", precision=8, scale=2, nullable=false)
+     */
+    private $amount;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="crea_id_user", type="integer", nullable=false)
+     */
+    private $creaIdUser;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="valid_resp_id_user", type="integer", nullable=true)
+     */
+    private $validRespIdUser;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="valid_accou_id_user", type="integer", nullable=true)
+     */
+    private $validAccouIdUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="crea_demand", type="datetime", nullable=true)
+     */
+    private $creaDemand;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="mod_demand", type="datetime", nullable=true)
+     */
+    private $modDemand;
+
+    /**
+     * @var \Costcentre
+     *
+     * @ORM\ManyToOne(targetEntity="Costcentre")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="costcentre_id_costcentre", referencedColumnName="id_costcentre")
+     * })
+     */
+    private $costcentreCostcentre;
+
+    /**
+     * @var \Labo
+     *
+     * @ORM\ManyToOne(targetEntity="Labo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="labo_id_labo", referencedColumnName="id_labo")
+     * })
+     */
+    private $laboLabo;
+
+    /**
+     * @var \Oracle
+     *
+     * @ORM\ManyToOne(targetEntity="Oracle")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="oracle_id_oracle", referencedColumnName="id_oracle")
+     * })
+     */
+    private $oracleOracle;
+
+    /**
+     * @var \Proco
+     *
+     * @ORM\ManyToOne(targetEntity="Proco")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="proco_id_proco", referencedColumnName="id_proco")
+     * })
+     */
+    private $procoProco;
+
+    /**
+     * @var \Project
+     *
+     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="project_id_project", referencedColumnName="id_project")
+     * })
+     */
+    private $projectProject;
+
+    /**
+     * @var \Reference
+     *
+     * @ORM\ManyToOne(targetEntity="Reference")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="reference_id_reference", referencedColumnName="id_reference")
+     * })
+     */
+    private $referenceReference;
+
+    /**
+     * @var \Sector
+     *
+     * @ORM\ManyToOne(targetEntity="Sector")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sector_id_sector", referencedColumnName="id_sector")
+     * })
+     */
+    private $sectorSector;
+
+    /**
+     * @var \Delivery
+     *
+     * @ORM\ManyToOne(targetEntity="Delivery")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="delivery_id_delivery", referencedColumnName="id_delivery")
+     * })
+     */
+    private $deliveryDelivery;
+
+    /**
+     * @var \Status
+     *
+     * @ORM\ManyToOne(targetEntity="Status")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_idstatus", referencedColumnName="id_status")
+     * })
+     */
+    private $statusstatus;
+
+    /**
+     * @var \Vendor
+     *
+     * @ORM\ManyToOne(targetEntity="Vendor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="vendor_id_vendor", referencedColumnName="id_vendor")
+     * })
+     */
+    private $vendorVendor;
+
+
+}

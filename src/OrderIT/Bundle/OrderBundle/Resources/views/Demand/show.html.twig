@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Demand</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Iddemand</th>
+                <td>{{ entity.idDemand }}</td>
+            </tr>
+            <tr>
+                <th>Numerodemand</th>
+                <td>{{ entity.numeroDemand }}</td>
+            </tr>
+            <tr>
+                <th>Referencedate</th>
+                <td>{{ entity.referenceDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Observation</th>
+                <td>{{ entity.observation }}</td>
+            </tr>
+            <tr>
+                <th>Hfield</th>
+                <td>{{ entity.hfield }}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ entity.amount }}</td>
+            </tr>
+            <tr>
+                <th>Creaiduser</th>
+                <td>{{ entity.creaIdUser }}</td>
+            </tr>
+            <tr>
+                <th>Validrespiduser</th>
+                <td>{{ entity.validRespIdUser }}</td>
+            </tr>
+            <tr>
+                <th>Validaccouiduser</th>
+                <td>{{ entity.validAccouIdUser }}</td>
+            </tr>
+            <tr>
+                <th>Creademand</th>
+                <td>{{ entity.creaDemand|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Moddemand</th>
+                <td>{{ entity.modDemand|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('demand') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('demand_edit', { 'id': entity.idDemand }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

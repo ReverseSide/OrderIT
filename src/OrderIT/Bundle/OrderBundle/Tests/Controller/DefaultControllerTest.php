@@ -1,6 +1,6 @@
 <?php
 
-namespace OrderIT\OrderBundle\Tests\Controller;
+namespace OrderIT\Bundle\OrderBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
