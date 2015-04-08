@@ -1,3 +1,8 @@
+order_it_order:
+    resource: "@OrderITOrderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
