@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
 class DemandType extends AbstractType
 {
     /**
@@ -21,7 +22,6 @@ class DemandType extends AbstractType
             ->add('vendorVendor')
             ->add('referenceReference')
             ->add('referenceDate')
-            ->add('articleArticle')
             ->add('observation')
             ->add('hfield')
             ->add('amount')
@@ -45,7 +45,8 @@ class DemandType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'OrderIT\Bundle\OrderBundle\Entity\Demand'
+            'data_class' => 'OrderIT\Bundle\OrderBundle\Entity\Demand',
+            'cascade_validation' => true,
         ));
     }
 

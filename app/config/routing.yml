@@ -3,6 +3,8 @@ order:
     type:     annotation
     prefix:   /
 
+imag_ldap:
+  resource: "@IMAGLdapBundle/Resources/config/routing.yml"
 
 app:
     resource: "@AppBundle/Controller/"

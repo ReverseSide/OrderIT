@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Demand
 {
+
     /**
      * @var integer
      *

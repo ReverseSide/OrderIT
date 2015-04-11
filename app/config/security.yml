@@ -1,12 +1,46 @@
 security:
-    providers:
-        in_memory:
-            memory: ~
+  firewalls:
+    restricted_area:
+      pattern:          ^/
+      anonymous:        ~
+      provider:         ldap
+      imag_ldap:        ~
+      logout:
+        path:           /logout
+        target:         /
 
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
-            security: false
+  providers:
+    ldap:
+      id: imag_ldap.security.user.provider
 
-        default:
-            anonymous: ~
+  encoders:
+    IMAG\LdapBundle\User\LdapUser: plaintext
+
+  access_control:
+    - { path: ^/login,          roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/,               roles: IS_AUTHENTICATED_ANONYMOUSLY} #IS_AUTHENTICATED_FULLY
+
+imag_ldap:
+  client:
+    host: 192.168.100.200
+    port: 389
+    version: 3 # Optional
+    username: Administrateur # Optional
+    password: Exodia2015 # Optional
+#    network_timeout: 10 # Optional
+    referrals_enabled: true # Optional
+    bind_username_before: true # Optional
+#    skip_roles: false # Optional
+
+  user:
+    base_dn: cn=Users,dc=order,dc=heig-vd,dc=local
+#    filter: (&(foo=bar)(ObjectClass=Person)) #Optional
+    name_attribute: uid
+  role:
+    base_dn: ou=Users,dc=order,dc=heig-vd,dc=local
+#    filter: (ou=group) #Optional
+    name_attribute: cn
+    user_attribute: member
+    user_id: dn
+
+  user_class: IMAG\LdapBundle\User\LdapUser # Optional
