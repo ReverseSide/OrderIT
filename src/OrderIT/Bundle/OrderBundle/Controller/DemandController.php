@@ -161,7 +161,7 @@ class DemandController extends Controller
     private function createEditForm(Demand $entity)
     {
         $form = $this->createForm(new DemandType(), $entity, array(
-            'action' => $this->generateUrl('demand_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('demand_update', array('id' => $entity->getIdDemand())),
             'method' => 'PUT',
         ));
 

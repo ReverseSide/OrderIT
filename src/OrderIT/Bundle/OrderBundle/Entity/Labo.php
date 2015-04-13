@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Labo
 {
+    public function __toString() {
+        return $this->getLabo();
+    }
     /**
      * @var integer
      *

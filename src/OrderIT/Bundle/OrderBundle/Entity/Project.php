@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Project
 {
+    public function __toString() {
+        return $this->getProject();
+    }
     /**
      * @var integer
      *

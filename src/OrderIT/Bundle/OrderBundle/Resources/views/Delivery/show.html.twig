@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Delivery</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Iddelivery</th>
+                <td>{{ entity.idDelivery }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>Postoffice</th>
+                <td>{{ entity.postoffice }}</td>
+            </tr>
+            <tr>
+                <th>Adress</th>
+                <td>{{ entity.adress }}</td>
+            </tr>
+            <tr>
+                <th>Postcode</th>
+                <td>{{ entity.postcode }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ entity.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ entity.fax }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('delivery') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('delivery_edit', { 'id': entity.idDelivery }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

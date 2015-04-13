@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Oracle
 {
+    public function __toString() {
+        return $this->getOracle();
+    }
     /**
      * @var integer
      *

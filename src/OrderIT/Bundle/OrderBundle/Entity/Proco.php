@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Proco
 {
+    public function __toString() {
+        return $this->getProco();
+    }
     /**
      * @var integer
      *

@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Status
 {
+    public function __toString() {
+        return $this->getDescription();
+    }
     /**
      * @var integer
      *

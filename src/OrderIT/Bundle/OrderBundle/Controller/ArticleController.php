@@ -161,7 +161,7 @@ class ArticleController extends Controller
     private function createEditForm(Article $entity)
     {
         $form = $this->createForm(new ArticleType(), $entity, array(
-            'action' => $this->generateUrl('article_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('article_update', array('id' => $entity->getIdArticle())),
             'method' => 'PUT',
         ));
 

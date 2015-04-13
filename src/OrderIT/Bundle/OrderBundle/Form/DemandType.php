@@ -2,6 +2,7 @@
 
 namespace OrderIT\Bundle\OrderBundle\Form;
 
+use OrderIT\Bundle\OrderBundle\Entity\Delivery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -16,12 +17,27 @@ class DemandType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numeroDemand')
-            ->add('projectProject')
-            ->add('deliveryDelivery')
-            ->add('vendorVendor')
+            ->add('numeroDemand','text', array(
+                'label'  => 'Numero de demande',
+                'attr'   =>  array(
+                'class'   => 'input-sm')))
+            #->add('projectProject', new ProjectType())
+            #->add('projectProject','text', array(
+                #'label'  => 'Projet'))
+            #->add('deliveryDelivery','text', array(
+               #'label'  => 'Adresse de livraison'))
+            ->add('deliveryDelivery', new DeliveryType(array(
+            'label'  => 'Adresse de livraison')))
+            #->add('vendorVendor')
+            ->add('vendorVendor', new VendorType())
             ->add('referenceReference')
             ->add('referenceDate')
+            #->add('articleArticle', 'collection', array(
+                #'options'  => array(
+                    #'required'  => false,
+                    #'attr'      => array('class' => 'ArticleType'),
+                    #'multiple' => true
+                #)))
             ->add('observation')
             ->add('hfield')
             ->add('amount')

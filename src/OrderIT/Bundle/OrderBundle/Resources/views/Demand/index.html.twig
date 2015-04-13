@@ -1,22 +1,22 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Demand list</h1>
-
-    <table class="records_list">
+    <h1>Liste des commandes</h1>
+    <br>
+    <table class="records_list table-striped">
         <thead>
             <tr>
-                <th>Iddemand</th>
-                <th>Numerodemand</th>
-                <th>Referencedate</th>
+                <th>Id</th>
+                <th>Numero de commande</th>
+                <th>Date de la référence</th>
+                <th>H</th>
+                <th>Requerant</th>
+                <th>Validé par</th>
+                <th>Comptabilisé par</th>
                 <th>Observation</th>
-                <th>Hfield</th>
-                <th>Amount</th>
-                <th>Creaiduser</th>
-                <th>Validrespiduser</th>
-                <th>Validaccouiduser</th>
-                <th>Creademand</th>
-                <th>Moddemand</th>
+                <th>Date de création</th>
+                <th>Date de modification</th>
+                <th>Montant</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,21 +26,21 @@
                 <td><a href="{{ path('demand_show', { 'id': entity.idDemand }) }}">{{ entity.idDemand }}</a></td>
                 <td>{{ entity.numeroDemand }}</td>
                 <td>{% if entity.referenceDate %}{{ entity.referenceDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.observation }}</td>
                 <td>{{ entity.hfield }}</td>
-                <td>{{ entity.amount }}</td>
                 <td>{{ entity.creaIdUser }}</td>
                 <td>{{ entity.validRespIdUser }}</td>
                 <td>{{ entity.validAccouIdUser }}</td>
+                <td>{{ entity.observation }}</td>
                 <td>{% if entity.creaDemand %}{{ entity.creaDemand|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.modDemand %}{{ entity.modDemand|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.amount }}</td>
                 <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('demand_show', { 'id': entity.idDemand }) }}">show</a>
+                    <li style="display: inline-block">
+                        <a class="btn btn-info glyphicon glyphicon-search" href="{{ path('demand_show', { 'id': entity.idDemand }) }}">show</a>
                     </li>
-                    <li>
-                        <a href="{{ path('demand_edit', { 'id': entity.idDemand }) }}">edit</a>
+                    <li style="display: inline-block">
+                        <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('demand_edit', { 'id': entity.idDemand }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -48,11 +48,11 @@
         {% endfor %}
         </tbody>
     </table>
-
+        <br>
         <ul>
-        <li>
-            <a href="{{ path('demand_new') }}">
-                Create a new entry
+        <li style="display: inline-block" class="pull-right">
+            <a class="btn btn-primary glyphicon glyphicon-inbox" href="{{ path('demand_new') }}">
+                Créer une nouvelle demande
             </a>
         </li>
     </ul>

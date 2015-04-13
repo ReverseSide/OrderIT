@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Listing list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idlisting</th>
+                <th>Crealisting</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('listing_show', { 'id': entity.idListing }) }}">{{ entity.idListing }}</a></td>
+                <td>{% if entity.creaListing %}{{ entity.creaListing|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('listing_show', { 'id': entity.idListing }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('listing_edit', { 'id': entity.idListing }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('listing_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,15 +1,18 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    <div class="container">
     <h1>Nouvelle commande</h1>
+
 
     {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('demand') }}">
-            Back to the list
+        {#<ul class="record_actions">
+    <li>#}
+        <a class="btn btn-warning glyphicon glyphicon-share-alt" href="{{ path('demand') }}">
+            Retour
         </a>
-    </li>
+    {#</li>#}
+    </div>
 </ul>
 {% endblock %}

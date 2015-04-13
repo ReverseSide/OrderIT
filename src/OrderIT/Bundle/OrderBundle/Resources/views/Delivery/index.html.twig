@@ -1,0 +1,51 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Delivery list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Iddelivery</th>
+                <th>Name</th>
+                <th>Postoffice</th>
+                <th>Adress</th>
+                <th>Postcode</th>
+                <th>Telephone</th>
+                <th>Fax</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('delivery_show', { 'id': entity.idDelivery }) }}">{{ entity.idDelivery }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.postoffice }}</td>
+                <td>{{ entity.adress }}</td>
+                <td>{{ entity.postcode }}</td>
+                <td>{{ entity.telephone }}</td>
+                <td>{{ entity.fax }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('delivery_show', { 'id': entity.idDelivery }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('delivery_edit', { 'id': entity.idDelivery }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('delivery_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

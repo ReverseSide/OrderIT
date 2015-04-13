@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Comment</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idcomment</th>
+                <td>{{ entity.idComment }}</td>
+            </tr>
+            <tr>
+                <th>Iduser</th>
+                <td>{{ entity.idUser }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ entity.comment }}</td>
+            </tr>
+            <tr>
+                <th>Creacomment</th>
+                <td>{{ entity.creaComment|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('comment') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('comment_edit', { 'id': entity.idComment }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Vendor</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idvendor</th>
+                <td>{{ entity.idVendor }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>Postofficebox</th>
+                <td>{{ entity.postofficebox }}</td>
+            </tr>
+            <tr>
+                <th>Adress</th>
+                <td>{{ entity.adress }}</td>
+            </tr>
+            <tr>
+                <th>Postcode</th>
+                <td>{{ entity.postcode }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ entity.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ entity.fax }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('vendor') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('vendor_edit', { 'id': entity.idVendor }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

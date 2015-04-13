@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Costcentre
 {
+    public function __toString() {
+        return $this->getCostcentre();
+    }
     /**
      * @var integer
      *

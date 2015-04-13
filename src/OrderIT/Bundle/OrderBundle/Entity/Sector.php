@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sector
 {
+    public function __toString() {
+        return $this->getSector();
+    }
     /**
      * @var integer
      *
