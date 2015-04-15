@@ -53,7 +53,7 @@ class ListingController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('listing_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('listing_show', array('id' => $entity->getIdListing())));
         }
 
         return array(
@@ -161,7 +161,7 @@ class ListingController extends Controller
     private function createEditForm(Listing $entity)
     {
         $form = $this->createForm(new ListingType(), $entity, array(
-            'action' => $this->generateUrl('listing_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('listing_update', array('id' => $entity->getIdListing())),
             'method' => 'PUT',
         ));
 

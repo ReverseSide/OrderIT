@@ -21,7 +21,7 @@ class DemandType extends AbstractType
                 'label'  => 'Numero de demande',
                 'attr'   =>  array(
                 'class'   => 'input-sm')))
-            #->add('projectProject', new ProjectType())
+            ->add('projectProject', new ProjectType())
             #->add('projectProject','text', array(
                 #'label'  => 'Projet'))
             #->add('deliveryDelivery','text', array(
@@ -32,12 +32,6 @@ class DemandType extends AbstractType
             ->add('vendorVendor', new VendorType())
             ->add('referenceReference')
             ->add('referenceDate')
-            #->add('articleArticle', 'collection', array(
-                #'options'  => array(
-                    #'required'  => false,
-                    #'attr'      => array('class' => 'ArticleType'),
-                    #'multiple' => true
-                #)))
             ->add('observation')
             ->add('hfield')
             ->add('amount')

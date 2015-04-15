@@ -14,7 +14,7 @@ class Article
 {
     public function __toString() {
 
-        return $this->getDescription();
+        return (string) $this->getIdArticle();
     }
     /**
      * @var integer

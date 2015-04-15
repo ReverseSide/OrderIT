@@ -53,7 +53,7 @@ class DemandController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('demand_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('demand_show', array('id' => $entity->getIdDemand())));
         }
 
         return array(

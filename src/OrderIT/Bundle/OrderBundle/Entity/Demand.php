@@ -12,9 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Demand
 {
-    public function __toString() {
-        return $this->getIdDemand();
-    }
+
     /**
      * @var integer
      *
@@ -64,7 +62,7 @@ class Demand
      *
      * @ORM\Column(name="crea_id_user", type="integer", nullable=false)
      */
-    private $creaIdUser;
+    private $creaIdUser = 1;
 
     /**
      * @var integer
@@ -137,7 +135,7 @@ class Demand
     /**
      * @var \Project
      *
-     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\ManyToOne(targetEntity="Project",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="project_id_project", referencedColumnName="id_project")
      * })
@@ -167,7 +165,7 @@ class Demand
     /**
      * @var \Delivery
      *
-     * @ORM\ManyToOne(targetEntity="Delivery")
+     * @ORM\ManyToOne(targetEntity="Delivery",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="delivery_id_delivery", referencedColumnName="id_delivery")
      * })
@@ -187,7 +185,7 @@ class Demand
     /**
      * @var \Vendor
      *
-     * @ORM\ManyToOne(targetEntity="Vendor")
+     * @ORM\ManyToOne(targetEntity="Vendor",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="vendor_id_vendor", referencedColumnName="id_vendor")
      * })
