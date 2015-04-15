@@ -3,9 +3,10 @@
 {% block body -%}
     <h1>Ensemble des listings</h1>
 
-    <table class="records_list">
+    <table class="records_list table-striped">
         <thead>
             <tr>
+                <th>N° Demand</th>
                 <th>Id</th>
                 <th>Date de création</th>
                 <th>Actions</th>
@@ -14,17 +15,18 @@
         <tbody>
         {% for entity in entities %}
             <tr>
+                <td>{{ entity.demandDemand.numeroDemand }}</td>
                 <td><a href="{{ path('listing_show', { 'id': entity.idListing }) }}">{{ entity.idListing }}</a></td>
                 <td>{% if entity.creaListing %}{{ entity.creaListing|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('listing_show', { 'id': entity.idListing }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listing_edit', { 'id': entity.idListing }) }}">edit</a>
-                    </li>
-                </ul>
+                    <ul>
+                        <li style="display: inline-block">
+                            <a class="btn btn-info glyphicon glyphicon-search" href="{{ path('listing_show', { 'id': entity.idListing }) }}">show</a>
+                        </li>
+                        <li style="display: inline-block">
+                            <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('listing_edit', { 'id': entity.idListing }) }}">edit</a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         {% endfor %}

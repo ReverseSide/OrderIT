@@ -19,6 +19,7 @@ class VendorType extends AbstractType
             ->add('postofficebox')
             ->add('adress')
             ->add('postcode')
+            ->add('locality')
             ->add('telephone')
             ->add('fax')
         ;

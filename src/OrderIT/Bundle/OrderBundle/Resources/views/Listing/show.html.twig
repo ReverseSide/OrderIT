@@ -6,16 +6,38 @@
     <table class="record_properties">
         <tbody>
             <tr>
+                <th>Numero de commande</th>
+                <td>{{ entity.demandDemand.numeroDemand }}</td>
+            </tr>
+            <tr>
+                <th>Nom du projet</th>
+                <td>{{ entity.demandDemand.projectProject.project }}</td>
+            </tr>
+            <tr>
+                <th>Lieu de livraison</th>
+                <td>{{ entity.demandDemand.deliveryDelivery.name }}</td>
+                <td>Case Postal {{ entity.demandDemand.deliveryDelivery.postoffice }}</td>
+                <td>{{ entity.demandDemand.deliveryDelivery.adress }}</td>
+                <td>{{ entity.demandDemand.deliveryDelivery.postcode }}</td>
+                <td>{{ entity.demandDemand.deliveryDelivery.telephone }}</td>
+                <td>{{ entity.demandDemand.deliveryDelivery.fax }}</td>
+            </tr>
+            <tr>
+                <th>Fournisseur</th>
+                <td>{{ entity.demandDemand.vendorVendor.name }}</td>
+                <td>Case Postal {{ entity.vendorVendor.deliveryDelivery.postoffice }}</td>
+                <td>{{ entity.demandDemand.vendorVendor.adress }}</td>
+                <td>{{ entity.demandDemand.vendorVendor.postcode }}</td>
+                <td>{{ entity.demandDemand.vendorVendor.telephone }}</td>
+                <td>{{ entity.demandDemand.vendorVendor.fax }}</td>
+            </tr>
+            <tr>
                 <th>Idlisting</th>
                 <td>{{ entity.idListing }}</td>
             </tr>
             <tr>
                 <th>Crealisting</th>
                 <td>{{ entity.creaListing|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Idlisting</th>
-                <td>{{ entity.demand.id_demand }}</td>
             </tr>
         </tbody>
     </table>

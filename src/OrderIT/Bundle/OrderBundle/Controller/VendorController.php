@@ -161,7 +161,7 @@ class VendorController extends Controller
     private function createEditForm(Vendor $entity)
     {
         $form = $this->createForm(new VendorType(), $entity, array(
-            'action' => $this->generateUrl('vendor_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('vendor_update', array('id' => $entity->getIdVendor())),
             'method' => 'PUT',
         ));
 
