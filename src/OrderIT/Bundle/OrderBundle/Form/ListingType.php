@@ -15,13 +15,11 @@ class ListingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            #->add('creaListing')
             ->add('demandDemand', new DemandType())
             ->add('articleArticle', 'collection', array(
                'type' => new ArticleType(),
                'allow_add' => true,
                'by_reference' => false,))
-            #->add('articleArticle')
         ;
     }
     

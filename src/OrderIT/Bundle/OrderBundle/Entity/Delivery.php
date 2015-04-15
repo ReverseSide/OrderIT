@@ -63,16 +63,16 @@ class Delivery
      */
     private $fax;
 
-
+    public function __toString(){
+        return $this->getName();
+    }
 
     /**
      * Get idDelivery
      *
      * @return integer
      */
-    public function __toString(){
-        return $this->getName();
-    }
+
 
     public function getIdDelivery()
     {

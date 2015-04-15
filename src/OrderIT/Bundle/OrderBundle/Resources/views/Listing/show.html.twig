@@ -32,9 +32,18 @@
                 <td>{{ entity.demandDemand.vendorVendor.fax }}</td>
             </tr>
             <tr>
-                <th>Idlisting</th>
-                <td>{{ entity.idListing }}</td>
+                <th>A l'attention de</th>
+                <td>{{ entity.demandDemand.creaIdUser }}</td>
             </tr>
+            <tr>
+                <th>Selon offre réf.</th>
+                <td>{{ entity.demandDemand.referenceReference.reference }} du</td>
+                <td>{{ entity.demandDemand.referenceDate |date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+
+            </tr>
+
             <tr>
                 <th>Crealisting</th>
                 <td>{{ entity.creaListing|date('Y-m-d H:i:s') }}</td>

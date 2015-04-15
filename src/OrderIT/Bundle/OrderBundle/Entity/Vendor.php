@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Vendor
 {
-
     /**
      * @var integer
      *
@@ -50,10 +49,12 @@ class Vendor
      */
     private $postcode;
 
+
+
     /**
      * @var integer
      *
-     * @ORM\Column(name="telephone", type="integer", nullable=true)
+     * @ORM\Column(name="locality", type="string", length=45, nullable=true)
      */
 
     private $locality;
@@ -61,8 +62,9 @@ class Vendor
     /**
      * @var integer
      *
-     * @ORM\Column(name="locality", type="string", length=45, nullable=true)
+     * @ORM\Column(name="telephone", type="integer", nullable=true)
      */
+
     private $telephone;
 
     /**
@@ -72,7 +74,9 @@ class Vendor
      */
     private $fax;
 
-
+    public function __toString(){
+        return $this->getName();
+    }
 
     /**
      * Get idVendor
@@ -182,7 +186,7 @@ class Vendor
      * @param string $locality
      * @return Vendor
      */
-    public function setlocality($locality)
+    public function setLocality($locality)
     {
         $this->locality = $locality;
 

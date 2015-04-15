@@ -12,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Demand
 {
-
+    public function __toString() {
+        return $this->getIdDemand();
+    }
     /**
      * @var integer
      *
@@ -647,7 +649,7 @@ class Demand
      * @param \OrderIT\Bundle\OrderBundle\Entity\Vendor $vendorVendor
      * @return Demand
      */
-    public function setVendorVendor(\OrderIT\Bundle\OrderBundle\Entity\Vendor $vendorVendor = null)
+    public function setVendorVendor(\OrderIT\Bundle\OrderBundle\Entity\Vendor $deliveryDelivery = null)
     {
         $this->vendorVendor = $vendorVendor;
 
@@ -657,7 +659,7 @@ class Demand
     /**
      * Get vendorVendor
      *
-     * @return \OrderIT\Bundle\OrderBundle\Entity\Vendor 
+     * @return \OrderIT\Bundle\OrderBundle\Entity\Vendor
      */
     public function getVendorVendor()
     {

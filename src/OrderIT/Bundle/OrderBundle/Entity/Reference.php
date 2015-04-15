@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Reference
 {
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getReference();
     }
     /**
