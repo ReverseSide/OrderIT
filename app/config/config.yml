@@ -72,6 +72,14 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
+# Extention Doctrine
+stof_doctrine_extensions:
+    default_locale: fr
+    orm:
+        default:
+            sluggable: true
+            timestampable: true # not needed: listeners are not enabled by default
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"

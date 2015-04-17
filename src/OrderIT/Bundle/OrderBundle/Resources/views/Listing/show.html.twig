@@ -2,7 +2,7 @@
 
 {% block body -%}
     <h1>Détaille de la commande</h1>
-    <div id="Livraison" class="col-md-4" >
+    <div id="Livraison" class="col-md-5" >
         Numero de commande : {{ entity.demandDemand.numeroDemand }}<br>
         Nom du projet : {{ entity.demandDemand.projectProject.project }}<br><br>
         <h5>Lieu de livraison :</h5>
@@ -30,10 +30,25 @@
                 Selon offre réf.
                 {{ entity.demandDemand.referenceReference.reference }} du
                 {{ entity.demandDemand.referenceDate |date('Y-m-d') }}<br><br>
-        <table class="records_list table-striped">
+        <table class="records_list table table-striped">
+            <thead>
+                <tr>
+                    <th>Pos</th>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>No Article, Code, Numéro, Dimensions</th>
+                </tr>
+            </thead>
+            <tbody>
             {%for articles in entity.articleArticle %}
-                    {{ articles.description }}<br>
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ articles.description }}</td>
+                    <td></td>
+                    <td> {{ articles.numeroarticle }}</td>
+                </tr>
             {% endfor %}
+            </tbody>
         </table>
             <br>YVERDON-LES-BAINS, le {{ entity.demandDemand.modDemand |date('d-m-Y') }}<br>
 

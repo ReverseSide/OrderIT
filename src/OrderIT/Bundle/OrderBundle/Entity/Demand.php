@@ -3,6 +3,7 @@
 namespace OrderIT\Bundle\OrderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Demand
@@ -83,13 +84,14 @@ class Demand
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="crea_demand", type="datetime", nullable=true)
      */
     private $creaDemand;
 
     /**
      * @var \DateTime
-     *
+     * @Gedmo\Timestampable
      * @ORM\Column(name="mod_demand", type="datetime", nullable=true)
      */
     private $modDemand;

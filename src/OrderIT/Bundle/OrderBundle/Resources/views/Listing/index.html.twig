@@ -3,11 +3,12 @@
 {% block body -%}
     <h1>Ensemble des listings</h1>
 
-    <table class="records_list table-striped">
+    <table class="records_list table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>N° Demand</th>
+                <th>Status</th>
                 <th>Date de création</th>
                 <th>Actions</th>
             </tr>
@@ -17,6 +18,7 @@
             <tr>
                 <td><a href="{{ path('listing_show', { 'id': entity.idListing }) }}">{{ entity.idListing }}</a></td>
                 <td>{{ entity.demandDemand.numeroDemand }}</td>
+                <td>{{ entity.demandDemand.statusstatus }}</td>
                 <td>{% if entity.creaListing %}{{ entity.creaListing|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
                     <ul>
