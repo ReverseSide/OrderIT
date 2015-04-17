@@ -1,55 +1,45 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Listing</h1>
+    <h1>Détaille de la commande</h1>
+    <div id="Livraison" class="col-md-4" >
+        Numero de commande : {{ entity.demandDemand.numeroDemand }}<br>
+        Nom du projet : {{ entity.demandDemand.projectProject.project }}<br><br>
+        <h5>Lieu de livraison :</h5>
+        {{ entity.demandDemand.deliveryDelivery.name }}<br>
+        Case Postal {{ entity.demandDemand.deliveryDelivery.postoffice }}<br>
+        {{ entity.demandDemand.deliveryDelivery.adress }}<br>
+        {{ entity.demandDemand.deliveryDelivery.postcode }}<br>
+        {{ entity.demandDemand.deliveryDelivery.telephone }}<br>
+        {{ entity.demandDemand.deliveryDelivery.fax }}<br>
+    </div>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Numero de commande</th>
-                <td>{{ entity.demandDemand.numeroDemand }}</td>
-            </tr>
-            <tr>
-                <th>Nom du projet</th>
-                <td>{{ entity.demandDemand.projectProject.project }}</td>
-            </tr>
-            <tr>
-                <th>Lieu de livraison</th>
-                <td>{{ entity.demandDemand.deliveryDelivery.name }}</td>
-                <td>Case Postal {{ entity.demandDemand.deliveryDelivery.postoffice }}</td>
-                <td>{{ entity.demandDemand.deliveryDelivery.adress }}</td>
-                <td>{{ entity.demandDemand.deliveryDelivery.postcode }}</td>
-                <td>{{ entity.demandDemand.deliveryDelivery.telephone }}</td>
-                <td>{{ entity.demandDemand.deliveryDelivery.fax }}</td>
-            </tr>
-            <tr>
-                <th>Fournisseur</th>
-                <td>{{ entity.demandDemand.vendorVendor.name }}</td>
-                <td>Case Postal {{ entity.vendorVendor.deliveryDelivery.postoffice }}</td>
-                <td>{{ entity.demandDemand.vendorVendor.adress }}</td>
-                <td>{{ entity.demandDemand.vendorVendor.postcode }}</td>
-                <td>{{ entity.demandDemand.vendorVendor.telephone }}</td>
-                <td>{{ entity.demandDemand.vendorVendor.fax }}</td>
-            </tr>
-            <tr>
-                <th>A l'attention de</th>
-                <td>{{ entity.demandDemand.creaIdUser }}</td>
-            </tr>
-            <tr>
-                <th>Selon offre réf.</th>
-                <td>{{ entity.demandDemand.referenceReference.reference }} du</td>
-                <td>{{ entity.demandDemand.referenceDate |date('Y-m-d') }}</td>
-            </tr>
-            <tr>
+    <div id="Fournisseur" class="col-md-6" >
 
-            </tr>
+            <h5>FOURNISSEUR</h5>
+            {{ entity.demandDemand.VendorVendor.name }}<br>
+            Case Postal{{ entity.demandDemand.VendorVendor.postofficebox }}<br>
+            {{ entity.demandDemand.VendorVendor.adress }}<br>
+            {{ entity.demandDemand.VendorVendor.postcode }}
+            {{ entity.demandDemand.VendorVendor.locality }}<br>
+            {{ entity.demandDemand.VendorVendor.telephone }}<br>
+            {{ entity.demandDemand.VendorVendor.fax }}<br>
+    </div>
+    <div id="Article" class="col-md-10">
+        <br>A l'attention de: {{ entity.demandDemand.creaIdUser }}<br>
+                Selon offre réf.
+                {{ entity.demandDemand.referenceReference.reference }} du
+                {{ entity.demandDemand.referenceDate |date('Y-m-d') }}<br><br>
+        <table class="records_list table-striped">
+            {%for articles in entity.articleArticle %}
+                    {{ articles.description }}<br>
+            {% endfor %}
+        </table>
+            <br>YVERDON-LES-BAINS, le {{ entity.demandDemand.modDemand |date('d-m-Y') }}<br>
 
-            <tr>
-                <th>Crealisting</th>
-                <td>{{ entity.creaListing|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
+                Observations :
+                {{ entity.demandDemand.observation }}
+    </div>
 
         <ul class="record_actions">
     <li>

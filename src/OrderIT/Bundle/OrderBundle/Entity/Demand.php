@@ -649,7 +649,7 @@ class Demand
      * @param \OrderIT\Bundle\OrderBundle\Entity\Vendor $vendorVendor
      * @return Demand
      */
-    public function setVendorVendor(\OrderIT\Bundle\OrderBundle\Entity\Vendor $deliveryDelivery = null)
+    public function setVendorVendor(\OrderIT\Bundle\OrderBundle\Entity\Vendor $vendorVendor = null)
     {
         $this->vendorVendor = $vendorVendor;
 
