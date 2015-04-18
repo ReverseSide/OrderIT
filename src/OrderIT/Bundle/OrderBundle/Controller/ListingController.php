@@ -244,4 +244,5 @@ class ListingController extends Controller
             ->getForm()
         ;
     }
+
 }

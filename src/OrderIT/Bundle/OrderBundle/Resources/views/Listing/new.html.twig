@@ -1,8 +1,62 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
-    <h1>Listing creation</h1>
+    <h1>Créer une nouvelle commmande</h1><br>
 
-    {{ form(form) }}
+   {# {{ form(form) }}#}
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div id="DemandInfo" class="col-md-5">
+        <div class="col-lg-11">
+            {{ form_row(form.demandDemand.numeroDemand) }}
+            {{ form_row(form.demandDemand.projectProject) }}
+            <div id="DemandDelivery">
+                {{ form_row(form.demandDemand.deliveryDelivery) }}
+            </div>
+        </div>
+    </div>
+    <div id="DemandVendor" class="col-md-5">
+        <div class="col-lg-11">
+        {{ form_row(form.demandDemand.vendorVendor) }}
+        </div>
+    </div>
+    <div id="DemandReference" class="col-md-12">
+        <div class="col-lg-5">
+        {{ form_row(form.demandDemand.referenceReference) }}
+        </div>
+        <div class="col-lg-5">
+        {{ form_row(form.demandDemand.referenceDate) }}
+        </div>
+    </div>
+    <div id="DemandArticle" class="col-md-12">
+        {{ form_row(form.articleArticle) }}
+    </div>
+    <div id="DemandCompta" class="col-md-12">
+        {{ form_row(form.demandDemand.observation) }}
+        <div class="col-lg-4">
+            {{ form_row(form.demandDemand.procoProco) }}
+        </div>
+        <div class="col-lg-4">
+            {{ form_row(form.demandDemand.laboLabo) }}
+        </div>
+        <div class="col-lg-5">
+            {{ form_row(form.demandDemand.oracleOracle) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_row(form.demandDemand.costcentreCostcentre) }}
+        </div>
+        <div class="col-lg-1">
+            {{ form_row(form.demandDemand.hfield) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_row(form.demandDemand.sectorSector) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_row(form.demandDemand.amount) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
 
         <ul class="record_actions">
     <li>
@@ -44,7 +98,7 @@
                 });
             }
 
-            // La fonction qui ajoute un formulaire Categorie
+            // La fonction qui ajoute un formulaire Article
             function addCategory($container) {
                 // Dans le contenu de l'attribut « data-prototype », on remplace :
                 // - le texte "__name__label__" qu'il contient par le label du champ
@@ -62,7 +116,7 @@
                 index++;
             }
 
-            // La fonction qui ajoute un lien de suppression d'une catégorie
+            // La fonction qui ajoute un lien de suppression d'un Article
             function addDeleteLink($prototype) {
                 // Création du lien
                 $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');

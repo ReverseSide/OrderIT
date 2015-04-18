@@ -18,7 +18,7 @@
 
             <h5>FOURNISSEUR</h5>
             {{ entity.demandDemand.VendorVendor.name }}<br>
-            Case Postal{{ entity.demandDemand.VendorVendor.postofficebox }}<br>
+            Case Postal {{ entity.demandDemand.VendorVendor.postofficebox }}<br>
             {{ entity.demandDemand.VendorVendor.adress }}<br>
             {{ entity.demandDemand.VendorVendor.postcode }}
             {{ entity.demandDemand.VendorVendor.locality }}<br>
@@ -44,7 +44,7 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ articles.description }}</td>
-                    <td></td>
+                    <td>{{ entity.demandDemand.idDemand }}</td>
                     <td> {{ articles.numeroarticle }}</td>
                 </tr>
             {% endfor %}
@@ -55,18 +55,28 @@
                 Observations :
                 {{ entity.demandDemand.observation }}
     </div>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('listing') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('listing_edit', { 'id': entity.idListing }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div id="Action" class="col-md-10 pull-right">
+        <ul class="record_actions list-inline">
+            <li>
+                <a class="btn btn-primary glyphicon glyphicon glyphicon-share-alt" href="{{ path('listing') }}">
+                    Retour
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('listing_edit', { 'id': entity.idListing }) }}">
+                    Modifier
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-success glyphicon glyphicon glyphicon-ok" href="{{ path('demand_valid', { 'idDemand': entity.demandDemand.idDemand }) }}">
+                    Valider
+                </a>
+            </li>
+            <li>
+            <a class="btn btn-danger glyphicon glyphicon glyphicon-trash" href="{{ path('demand_delete', { 'idDemand': entity.demandDemand.idDemand }) }}">
+                Supprimer
+            </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

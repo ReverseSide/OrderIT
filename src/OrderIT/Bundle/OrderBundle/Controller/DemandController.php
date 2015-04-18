@@ -202,30 +202,86 @@ class DemandController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
+    /**
+     * Valid a Demand entity.
+     *
+     * @Route("/{idDemand}/valid", name="demand_valid")
+     * @Method("GET")
+     */
+    public function validAction($idDemand)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
+        if (!$demand) {
+            throw $this->createNotFoundException('Unable to find Demand entity.');
+        }
+
+        $status= $em->getRepository('OrderBundle:Status')->find(20);
+        if (!$status) {
+            $status = new Status();
+            $status.setId(20);
+            /** or new Status(20) depends on your implementation */
+        }
+
+        $demand->setStatusstatus($status);
+        $em->persist($demand);
+        $em->flush();
+        return $this->redirect($this->generateUrl('listing'));
+    }
+
+    /**
+     * Refus a Demand entity.
+     *
+     * @Route("/{idDemand}/refus", name="demand_refus")
+     * @Method("GET")
+     */
+    public function RefusAction($idDemand)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
+        if (!$demand) {
+            throw $this->createNotFoundException('Unable to find Demand entity.');
+        }
+
+        $status= $em->getRepository('OrderBundle:Status')->find(20);
+        if (!$status) {
+            $status = new Status();
+            $status.setId(20);
+            /** or new Status(20) depends on your implementation */
+        }
+
+        $demand->setStatusstatus($status);
+        $em->persist($demand);
+        $em->flush();
+        return $this->redirect($this->generateUrl('listing'));
+    }
+
     /**
      * Deletes a Demand entity.
      *
-     * @Route("/{id}", name="demand_delete")
-     * @Method("DELETE")
+     * @Route("/{idDemand}/delete", name="demand_delete")
+     * @Method("GET")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($idDemand)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('OrderBundle:Demand')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Demand entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
+        if (!$demand) {
+            throw $this->createNotFoundException('Unable to find Demand entity.');
         }
 
-        return $this->redirect($this->generateUrl('demand'));
+        $status= $em->getRepository('OrderBundle:Status')->find(100);
+        if (!$status) {
+            $status = new Status();
+            $status.setId(100);
+            /** or new Status(20) depends on your implementation */
+        }
+
+        $demand->setStatusstatus($status);
+        $em->persist($demand);
+        $em->flush();
+        return $this->redirect($this->generateUrl('listing'));
     }
 
     /**

@@ -22,12 +22,8 @@ class DemandType extends AbstractType
                 'attr'   =>  array(
                 'class'   => 'input-sm')))
             ->add('projectProject', new ProjectType())
-            #->add('projectProject','text', array(
-                #'label'  => 'Projet'))
-            #->add('deliveryDelivery','text', array(
-               #'label'  => 'Adresse de livraison'))
             ->add('deliveryDelivery', new DeliveryType(array(
-            'label'  => 'Adresse de livraison')))
+                'label'  => 'Adresse de livraison')))
             #->add('vendorVendor')
             ->add('vendorVendor', new VendorType())
             ->add('referenceReference')

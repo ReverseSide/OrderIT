@@ -628,7 +628,7 @@ class Demand
      * @param \OrderIT\Bundle\OrderBundle\Entity\Status $statusstatus
      * @return Demand
      */
-    public function setStatusstatus(\OrderIT\Bundle\OrderBundle\Entity\Status $statusstatus = null)
+    public function setStatusstatus(\OrderIT\Bundle\OrderBundle\Entity\Status $statusstatus)
     {
         $this->statusstatus = $statusstatus;
 
