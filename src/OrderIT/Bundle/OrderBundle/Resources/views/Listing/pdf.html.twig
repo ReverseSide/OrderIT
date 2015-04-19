@@ -2,10 +2,38 @@
 <html>
 <head>
     <meta charset="UTF-8" />
+    <link href="{{ asset('css/bootstrap.css', absolute=true) }}" rel="stylesheet" media="screen">
     <title>Heig-vd plateforme de commande de matériel</title>
 <body>
-<div id="Livraison" class="col-md-5" >
-        Numero de commande : {{ entity.demandDemand.numeroDemand }}<br>
+    <div id="Entete">
+        <div class="pull-left">
+            <img src="{{ asset('bundles/order/images/vaud_logo.jpg', absolute=true) }}" alt="Canton de vaud" height="150">
+        </div>
+        <div class="pull-left">
+        HAUTE ECOLE D'INGENIERIE ET DE GESTION<br>
+        DU CANTON DE VAUD (HEIG-VD)<br><br>
+
+        ROUTE DE CHESSEAUX 1<br>
+        CASE 521<br>
+        CH-1401 YVERDON-LES-BAINS<br>
+        TELEPHONE: +41 (0)24 557 63 30<br>
+        TELEFAX: +41 (0)24 557 64 04<br>
+        CHE- 116.015.309 TVA<br>
+        </div>
+        <div id="Fournisseur" class="left10 pull-left">
+
+            <h5>FOURNISSEUR</h5>
+            {{ entity.demandDemand.VendorVendor.name }}<br>
+            Case Postal {{ entity.demandDemand.VendorVendor.postofficebox }}<br>
+            {{ entity.demandDemand.VendorVendor.adress }}<br>
+            {{ entity.demandDemand.VendorVendor.postcode }}
+            {{ entity.demandDemand.VendorVendor.locality }}<br>
+            {{ entity.demandDemand.VendorVendor.telephone }}<br>
+            {{ entity.demandDemand.VendorVendor.fax }}<br>
+        </div>
+    </div>
+    <div id="Livraison" class="clearfix">
+        <h2>COMMANDE No {{ entity.demandDemand.numeroDemand }}</h2><br>
         Nom du projet : {{ entity.demandDemand.projectProject.project }}<br><br>
         <h5>Lieu de livraison :</h5>
         {{ entity.demandDemand.deliveryDelivery.name }}<br>
@@ -16,18 +44,7 @@
         {{ entity.demandDemand.deliveryDelivery.fax }}<br>
     </div>
 
-    <div id="Fournisseur" class="col-md-6" >
-
-            <h5>FOURNISSEUR</h5>
-            {{ entity.demandDemand.VendorVendor.name }}<br>
-            Case Postal {{ entity.demandDemand.VendorVendor.postofficebox }}<br>
-            {{ entity.demandDemand.VendorVendor.adress }}<br>
-            {{ entity.demandDemand.VendorVendor.postcode }}
-            {{ entity.demandDemand.VendorVendor.locality }}<br>
-            {{ entity.demandDemand.VendorVendor.telephone }}<br>
-            {{ entity.demandDemand.VendorVendor.fax }}<br>
-    </div>
-    <div id="Article" class="col-md-10">
+    <div id="Article">
         <br>A l'attention de: {{ entity.demandDemand.creaIdUser }}<br>
                 Selon offre réf.
                 {{ entity.demandDemand.referenceReference.reference }} du

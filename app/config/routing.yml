@@ -3,8 +3,15 @@ order:
     type:     annotation
     prefix:   /
 
-imag_ldap:
-  resource: "@IMAGLdapBundle/Resources/config/routing.yml"
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+#imag_ldap:
+  #resource: "@IMAGLdapBundle/Resources/config/routing.yml"
 
 app:
     resource: "@AppBundle/Controller/"

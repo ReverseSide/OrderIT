@@ -34,6 +34,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
 
         "imag/ldap-bundle": "dev-master",
+        "fr3d/ldap-bundle": "2.0.*@dev",
+        "friendsofsymfony/user-bundle": "2.0.*@dev",
 
         "braincrafted/bootstrap-bundle": "~2.0",
         "twbs/bootstrap": "3.0.*",

@@ -98,3 +98,28 @@ knp_snappy:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltoimage
         options:    []
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: OrderIT\Bundle\OrderBundle\Entity\Localuser
+
+fr3d_ldap:
+    driver:
+       host:     192.168.100.200
+       port:     389
+       username: Administrateur
+       password: Exodia2015
+       accountDomainName: order.heig-vd.local
+       accountDomainNameShort: orderheigvd
+       useSsl:   false
+    user:
+        baseDn: dc=order,dc=heig-vd,dc=local
+        filter: (&(ObjectClass=Person))
+        attributes:
+            - { ldap_attr: samaccountname,  user_method: setUsername }
+            - { ldap_attr: sn, user_method: setName }
+            - { ldap_attr: preferredlanguage, user_method: setLanguage }
+            - { ldap_attr: mail, user_method: setEmail } # setter dans BaseUser
+
+

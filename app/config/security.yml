@@ -1,59 +1,33 @@
 security:
-  firewalls:
-    restricted_area:
-      pattern:          ^/
-      anonymous:        ~
-      provider:         ldap
-      imag_ldap:        ~
-      logout:
-        path:           /logout
-        target:         /
+    encoders:
+        OrderIT\Bundle\OrderBundle\Entity\Localuser: sha512
 
-  providers:
-    multiples:
-      chain:
-        providers: [in_memory, ldap]
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
-    in_memory:
-      memory:
-        users:
-          ryan:  { password: ryanpass, roles: 'ROLE_USER' }
-          admin: { password: kitten, roles: 'ROLE_ADMIN' }
+    providers:
+        chain_provider:
+            chain:
+                providers: [fos_userbundle, fr3d_ldapbundle]
+        fr3d_ldapbundle:
+            id: fr3d_ldap.security.user.provider
+        fos_userbundle:
+            id: fos_user.user_manager
 
-    ldap:
-      id: imag_ldap.security.user.provider
-
-
-
-
-  encoders:
-    IMAG\LdapBundle\User\LdapUser: plaintext
-
-  access_control:
-    - { path: ^/login,          roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/,               roles: IS_AUTHENTICATED_ANONYMOUSLY} #IS_AUTHENTICATED_FULLY
-
-imag_ldap:
-  client:
-    host: 192.168.100.200
-    port: 389
-    version: 3 # Optional
-    username: Administrateur # Optional
-    password: Exodia2015 # Optional
-#    network_timeout: 10 # Optional
-    referrals_enabled: true # Optional
-    bind_username_before: true # Optional
-#    skip_roles: false # Optional
-
-  user:
-    base_dn: ou=people,ou=Users,dc=order,dc=heig-vd,dc=local
-#    filter: (&(foo=bar)(ObjectClass=Person)) #Optional
-    name_attribute: uid
-#  role:
-#    base_dn: ou=Users,dc=order,dc=heig-vd,dc=local
-#    filter: (ou=group) #Optional
-#    name_attribute: cn
-#    user_attribute: member
-#    user_id: dn
-
-  user_class: IMAG\LdapBundle\User\LdapUser # Optional
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            fr3d_ldap: ~
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                always_use_default_target_path: true
+                default_target_path: /profile
+            logout: true
+            anonymous: true
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
