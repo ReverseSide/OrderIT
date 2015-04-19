@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new IMAG\LdapBundle\IMAGLdapBundle(),
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new OrderIT\Bundle\OrderBundle\OrderBundle(),
-            new OrderIT\CommandeBundle\CommandeBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
         );

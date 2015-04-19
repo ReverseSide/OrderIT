@@ -56,15 +56,16 @@
             {{ form_row(form.demandDemand.amount) }}
         </div>
     </div>
-    {{ form_end(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('listing') }}">
-            Retour
-        </a>
-    </li>
-</ul>
+    <div id="DemandAction" class="col-md-12">
+        {{ form_end(form) }}
+        <ul class="record_actions list-inline">
+            <li>
+                <a class="btn btn-warning glyphicon glyphicon glyphicon-share-alt" href="{{ path('listing') }}">
+                    Retour
+                </a>
+            </li>
+        </ul>
+    </div>
 {#Script pour la création de champs de création d'article#}
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript">

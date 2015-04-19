@@ -21,11 +21,11 @@
                 <td>{{ entity.demandDemand.statusstatus }}</td>
                 <td>{% if entity.creaListing %}{{ entity.creaListing|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                    <ul>
-                        <li style="display: inline-block">
+                    <ul class="list-inline">
+                        <li>
                             <a class="btn btn-info glyphicon glyphicon-search" href="{{ path('listing_show', { 'id': entity.idListing }) }}">show</a>
                         </li>
-                        <li style="display: inline-block">
+                        <li>
                             <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('listing_edit', { 'id': entity.idListing }) }}">edit</a>
                         </li>
                     </ul>
@@ -35,7 +35,7 @@
         </tbody>
     </table>
 
-        <ul>
+        <ul class="list-inline">
         <li>
             <a href="{{ path('listing_new') }}">
                 Create a new entry

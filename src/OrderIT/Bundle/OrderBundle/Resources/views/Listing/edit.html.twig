@@ -1,16 +1,70 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Listing edit</h1>
+    <h1>Modifier la commande</h1>
 
-    {{ form(edit_form) }}
+    {{ form_start(edit_form) }}
+    {{ form_errors(edit_form) }}
+
+    <div id="DemandInfo" class="col-md-5">
+        <div class="col-lg-11">
+            {{ form_row(edit_form.demandDemand.numeroDemand) }}
+            {{ form_row(edit_form.demandDemand.projectProject) }}
+            <div id="DemandDelivery">
+                {{ form_row(edit_form.demandDemand.deliveryDelivery) }}
+            </div>
+        </div>
+    </div>
+    <div id="DemandVendor" class="col-md-5">
+        <div class="col-lg-11">
+            {{ form_row(edit_form.demandDemand.vendorVendor) }}
+        </div>
+    </div>
+    <div id="DemandReference" class="col-md-12">
+        <div class="col-lg-5">
+            {{ form_row(edit_form.demandDemand.referenceReference) }}
+        </div>
+        <div class="col-lg-5">
+            {{ form_row(edit_form.demandDemand.referenceDate) }}
+        </div>
+    </div>
+    <div id="DemandArticle" class="col-md-12">
+        {{ form_row(edit_form.articleArticle) }}
+    </div>
+    <div id="DemandCompta" class="col-md-12">
+        {{ form_row(edit_form.demandDemand.observation) }}
+        <div class="col-lg-4">
+            {{ form_row(edit_form.demandDemand.procoProco) }}
+        </div>
+        <div class="col-lg-4">
+            {{ form_row(edit_form.demandDemand.laboLabo) }}
+        </div>
+        <div class="col-lg-5">
+            {{ form_row(edit_form.demandDemand.oracleOracle) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_row(edit_form.demandDemand.costcentreCostcentre) }}
+        </div>
+        <div class="col-lg-1">
+            {{ form_row(edit_form.demandDemand.hfield) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_row(edit_form.demandDemand.sectorSector) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_row(edit_form.demandDemand.amount) }}
+        </div>
+    </div>
+    <div id="DemandAction" class="col-md-12">
+        {{ form_end(edit_form) }}
 
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('listing') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+            <li>
+                <a href="{{ path('listing') }}">
+                    Back to the list
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+    </div>
 {% endblock %}

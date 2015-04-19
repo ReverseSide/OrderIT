@@ -1,8 +1,10 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Détaille de la commande</h1>
-    <div id="Livraison" class="col-md-5" >
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Heig-vd plateforme de commande de matériel</title>
+<body>
+<div id="Livraison" class="col-md-5" >
         Numero de commande : {{ entity.demandDemand.numeroDemand }}<br>
         Nom du projet : {{ entity.demandDemand.projectProject.project }}<br><br>
         <h5>Lieu de livraison :</h5>
@@ -45,7 +47,7 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ articles.description }}</td>
                     <td>{{ entity.demandDemand.idDemand }}</td>
-                    <td> {{ articles.numeroarticle }}</td>
+                    <td>{{ articles.numeroarticle }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -55,33 +57,6 @@
                 Observations :
                 {{ entity.demandDemand.observation }}
     </div>
-    <div id="Action" class="col-md-10 pull-right">
-        <ul class="record_actions list-inline">
-            <li>
-                <a class="btn btn-primary glyphicon glyphicon glyphicon-share-alt" href="{{ path('listing') }}">
-                    Retour
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('listing_edit', { 'id': entity.idListing }) }}">
-                    Modifier
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-success glyphicon glyphicon glyphicon-ok" href="{{ path('demand_valid', { 'idDemand': entity.demandDemand.idDemand }) }}">
-                    Valider
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-danger glyphicon glyphicon glyphicon-trash" href="{{ path('demand_delete', { 'idDemand': entity.demandDemand.idDemand }) }}">
-                    Supprimer
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default glyphicon glyphicon glyphicon-print" href="{{ path('listing_pdf', { 'id': entity.idListing }) }}">
-                    Imprimer
-                </a>
-            </li>
-        </ul>
-    </div>
-{% endblock %}
+</head>
+</body>
+</html>

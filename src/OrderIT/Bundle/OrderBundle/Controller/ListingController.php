@@ -3,6 +3,7 @@
 namespace OrderIT\Bundle\OrderBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -121,6 +122,38 @@ class ListingController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Finds a Listing entity for create a pdf
+     *
+     * @Route("/{id}/pdf", name="listing_pdf")
+     * @Method("GET")
+     * @Template()
+     */
+    public function PdfAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('OrderBundle:Listing')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Listing entity.');
+        }
+        $deleteForm = $this->createDeleteForm($id);
+        $html = $this->renderView('OrderBundle:Listing:pdf.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="demand'.$id.'.pdf"'
+            )
         );
     }
 
