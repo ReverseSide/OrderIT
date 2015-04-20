@@ -15,6 +15,7 @@ use OrderIT\Bundle\OrderBundle\Form\ListingType;
  * Listing controller.
  *
  * @Route("/listing")
+ *
  */
 class ListingController extends Controller
 {
@@ -37,10 +38,36 @@ class ListingController extends Controller
         );
     }
     /**
+     * Lists my Demand entities.
+     *
+     * @Route("/my_demand", name="mydemand")
+     * @Method("GET")
+     * @Template("OrderBundle:Listing:index.html.twig")
+     */
+    public function MydemandAction()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('OrderBundle:Listing')->findAll();
+
+
+        /**if (count($entities) > 1) {
+            throw "Erreur";
+        }**/
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+    /**
      * Creates a new Listing entity.
      *
      * @Route("/", name="listing_create")
-     * @Method("POST")
+     * @Method("GET")
      * @Template("OrderBundle:Listing:new.html.twig")
      */
     public function createAction(Request $request)

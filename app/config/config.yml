@@ -103,6 +103,8 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: OrderIT\Bundle\OrderBundle\Entity\Localuser
+    group:
+            group_class: OrderIT\Bundle\OrderBundle\Entity\Localgroup
 
 fr3d_ldap:
     driver:

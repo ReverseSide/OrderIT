@@ -10,9 +10,6 @@ fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /profile
 
-#imag_ldap:
-  #resource: "@IMAGLdapBundle/Resources/config/routing.yml"
-
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

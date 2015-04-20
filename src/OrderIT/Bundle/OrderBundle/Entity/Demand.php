@@ -14,6 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Demand
 {
     public function __toString() {
+
         return $this->getIdDemand();
     }
     /**
@@ -61,11 +62,14 @@ class Demand
     private $amount;
 
     /**
-     * @var integer
+     * @var \creatIdUser
      *
-     * @ORM\Column(name="crea_id_user", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="name", referencedColumnName="id")
+     * })
      */
-    private $creaIdUser = 1;
+    private $creaIdUser;
 
     /**
      * @var integer

@@ -54,6 +54,7 @@
 
                 Observations :
                 {{ entity.demandDemand.observation }}
+                {{ entity.demandDemand.statusstatus.idStatus }}
     </div>
     <div id="Action" class="col-md-10 pull-right">
         <ul class="record_actions list-inline">
@@ -67,21 +68,32 @@
                     Modifier
                 </a>
             </li>
-            <li>
+            {# Affiche le bouton Valider
+            Si l'utilisateur est une personne responsalbe ou de la comptabilité et que la commande n'a pas été validée à ce niveau #}
+            {% if ((is_granted('ROLE_VALIDATOR')) and (entity.demandDemand.statusstatus.idStatus == 1 )) or ((is_granted('ROLE_ACCOUNTING')) and (entity.demandDemand.statusstatus.idStatus == 2 )) %}
+                <li>
                 <a class="btn btn-success glyphicon glyphicon glyphicon-ok" href="{{ path('demand_valid', { 'idDemand': entity.demandDemand.idDemand }) }}">
                     Valider
                 </a>
             </li>
-            <li>
-                <a class="btn btn-danger glyphicon glyphicon glyphicon-trash" href="{{ path('demand_delete', { 'idDemand': entity.demandDemand.idDemand }) }}">
-                    Supprimer
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default glyphicon glyphicon glyphicon-print" href="{{ path('listing_pdf', { 'id': entity.idListing }) }}">
-                    Imprimer
-                </a>
-            </li>
+            {% endif %}
+            {# Affiche le bouton supprimer
+                Si l'utilisateur est une personne responsalbe ou de la comptabilité et que la commande n'a pas été validée à ce niveau #}
+            {% if ((is_granted('ROLE_VALIDATOR')) and (entity.demandDemand.statusstatus.idStatus == 1 )) or ((is_granted('ROLE_ACCOUNTING')) and (entity.demandDemand.statusstatus.idStatus == 3 )) %}
+                <li>
+                    <a class="btn btn-danger glyphicon glyphicon glyphicon-trash" href="{{ path('demand_delete', { 'idDemand': entity.demandDemand.idDemand }) }}">
+                        Supprimer
+                    </a>
+                </li>
+            {% endif %}
+            {# Si l'utilisateur est une personne de la comptabilité #}
+            {% if is_granted('ROLE_ACCOUNTING') %}
+                <li>
+                    <a class="btn btn-default glyphicon glyphicon glyphicon-print" href="{{ path('listing_pdf', { 'id': entity.idListing }) }}">
+                        Imprimer
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}

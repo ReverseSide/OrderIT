@@ -11,9 +11,55 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body class="container">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <strong>Order</strong>IT
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    {# Si l'utilisateur est un responsable ou une personne de service comptable#}
+                    {% if is_granted('ROLE_VALIDATOR') or is_granted('ROLE_ACCOUNTING') %}
+                        <li>
+                            <a href="{{ path('mydemand') }}">
+                                Demande ouverte
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('mydemand') }}">
+                                Mes validations
+                            </a>
+                        </li>
+                    {% endif %}
+                    {# Si l'utilisateur est un collaborateur requérant ou un responsable#}
+                    {% if is_granted('ROLE_REQUIRING') or is_granted('ROLE_VALIDATOR') %}
+                        <li>
+                            <a href="{{ path('mydemand') }}">
+                                Mes demandes
+                            </a>
+                        </li>
+                        <li><a href="{{ path('listing_new') }}">
+                                Nouvelle Demande
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            <div>
+            </div>
+            <div>
+                <a class="btn btn-default navbar-btn pull-right" href="{{ path('fos_user_security_logout') }}">
+                        Deconnexion
+                    </a>
+            </div>
+        </div>
+    </nav>
+    <body>
+        <div class="container">
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        </div>
         <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
         <script src="{{ asset('js/jquery.js') }}"></script>
         <!-- Include all JavaScripts, compiled by Assetic -->

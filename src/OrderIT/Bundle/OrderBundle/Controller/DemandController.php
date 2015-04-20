@@ -35,6 +35,7 @@ class DemandController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Demand entity.
      *
@@ -217,16 +218,39 @@ class DemandController extends Controller
             throw $this->createNotFoundException('Unable to find Demand entity.');
         }
 
-        $status= $em->getRepository('OrderBundle:Status')->find(20);
-        if (!$status) {
-            $status = new Status();
-            $status.setId(20);
-            /** or new Status(20) depends on your implementation */
+        // Si la personne est un responsable
+        if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
+
+            $status= $em->getRepository('OrderBundle:Status')->find(2);
+            if (!$status) {
+                $status = new Status();
+                $status.setId(2);
+            }
+
+            $demand->setStatusstatus($status);
+            $em->persist($demand);
+            $em->flush();
         }
 
-        $demand->setStatusstatus($status);
-        $em->persist($demand);
-        $em->flush();
+        //Si la personne est une personne du service comptable
+        else if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')) {
+
+            $status= $em->getRepository('OrderBundle:Status')->find(3);
+            if (!$status) {
+                $status = new Status();
+                $status.setId(3);
+            }
+
+            $demand->setStatusstatus($status);
+            $em->persist($demand);
+            $em->flush();
+        }
+
+        else {
+
+            throw $this->createNotFoundException('Vous n\'êtes pas autorisé à effectuer cette action.');
+        }
+
         return $this->redirect($this->generateUrl('listing'));
     }
 
