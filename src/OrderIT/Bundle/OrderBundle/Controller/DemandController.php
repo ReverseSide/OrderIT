@@ -227,9 +227,7 @@ class DemandController extends Controller
                 $status.setId(2);
             }
 
-            $demand->setStatusstatus($status);
-            $em->persist($demand);
-            $em->flush();
+
         }
 
         //Si la personne est une personne du service comptable
@@ -241,9 +239,6 @@ class DemandController extends Controller
                 $status.setId(3);
             }
 
-            $demand->setStatusstatus($status);
-            $em->persist($demand);
-            $em->flush();
         }
 
         else {
@@ -251,16 +246,20 @@ class DemandController extends Controller
             throw $this->createNotFoundException('Vous n\'êtes pas autorisé à effectuer cette action.');
         }
 
+        $demand->setStatusstatus($status);
+        $em->persist($demand);
+        $em->flush();
+
         return $this->redirect($this->generateUrl('listing'));
     }
 
     /**
-     * Refus a Demand entity.
+     * Ask to modifie a Demand entity.
      *
-     * @Route("/{idDemand}/refus", name="demand_refus")
+     * @Route("/{idDemand}/requestmod", name="demand_requestmod")
      * @Method("GET")
      */
-    public function RefusAction($idDemand)
+    public function RequestModAction($idDemand)
     {
         $em = $this->getDoctrine()->getManager();
         $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
@@ -268,17 +267,30 @@ class DemandController extends Controller
             throw $this->createNotFoundException('Unable to find Demand entity.');
         }
 
-        $status= $em->getRepository('OrderBundle:Status')->find(20);
-        if (!$status) {
-            $status = new Status();
-            $status.setId(20);
-            /** or new Status(20) depends on your implementation */
+        // Si la personne est un responsable
+        if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
+
+            $status = $em->getRepository('OrderBundle:Status')->find(30);
+            if (!$status) {
+                $status = new Status();
+                $status.setId(30);
+            }
+        }
+
+        //Si la personne est une personne du service comptable
+        if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')) {
+            $status = $em->getRepository('OrderBundle:Status')->find(40);
+            if (!$status) {
+                $status = new Status();
+                $status.setId(40);
+                /** or new Status(20) depends on your implementation */
+            }
         }
 
         $demand->setStatusstatus($status);
         $em->persist($demand);
         $em->flush();
-        return $this->redirect($this->generateUrl('listing'));
+        return $this->redirect($this->generateUrl('//comment_new'));
     }
 
     /**

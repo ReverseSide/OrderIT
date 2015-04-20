@@ -53,7 +53,7 @@ class CommentController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('comment_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('comment_show', array('id' => $entity->getIdComment())));
         }
 
         return array(
@@ -84,13 +84,14 @@ class CommentController extends Controller
     /**
      * Displays a form to create a new Comment entity.
      *
-     * @Route("/new", name="comment_new")
+     * @Route("/{idlisting}/comment", name="comment_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction($idlisting)
     {
         $entity = new Comment();
+        $entity->setListingListing($idlisting);
         $form   = $this->createCreateForm($entity);
 
         return array(

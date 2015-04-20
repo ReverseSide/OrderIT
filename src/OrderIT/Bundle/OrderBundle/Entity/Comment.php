@@ -3,6 +3,7 @@
 namespace OrderIT\Bundle\OrderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Comment
@@ -40,6 +41,7 @@ class Comment
 
     /**
      * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
      *
      * @ORM\Column(name="crea_comment", type="datetime", nullable=true)
      */

@@ -62,12 +62,9 @@ class Demand
     private $amount;
 
     /**
-     * @var \creatIdUser
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Localuser")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="name", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="crea_id_user", type="integer", nullable=false)
      */
     private $creaIdUser;
 

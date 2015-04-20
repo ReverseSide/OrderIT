@@ -13,9 +13,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Listing
 {
-    public function __toString() {
-
-        return $this->getIdListing();
+    public function __toString()
+    {
+        return (string) $this->getidListing();
     }
 
     /**

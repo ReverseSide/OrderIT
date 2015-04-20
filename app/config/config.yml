@@ -99,6 +99,7 @@ knp_snappy:
         binary:     /usr/local/bin/wkhtmltoimage
         options:    []
 
+# Determine quelle classe utilisateur sont utilisée dans le bundle FosUser
 fos_user:
     db_driver: orm
     firewall_name: main
@@ -106,6 +107,7 @@ fos_user:
     group:
             group_class: OrderIT\Bundle\OrderBundle\Entity\Localgroup
 
+#Configuration de la connexion LDAP du bundle Fr3d
 fr3d_ldap:
     driver:
        host:     192.168.100.200
