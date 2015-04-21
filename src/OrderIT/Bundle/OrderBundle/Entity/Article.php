@@ -76,7 +76,7 @@ class Article
     /**
      * Set numeroArticle
      *
-     * @param integer $numeroArticle
+     * @param string $numeroArticle
      * @return Article
      */
     public function setNumeroArticle($numeroArticle)
@@ -89,12 +89,13 @@ class Article
     /**
      * Get numeroArticle
      *
-     * @return integer 
+     * @return string
      */
     public function getNumeroArticle()
     {
         return $this->numeroArticle;
     }
+
 
     /**
      * Set description
@@ -117,6 +118,30 @@ class Article
     public function getDescription()
     {
         return $this->description;
+    }
+
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return Article
+     */
+    public function setQuantity($quantity)
+    {
+        $this->description = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 
     /**

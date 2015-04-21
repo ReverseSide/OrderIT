@@ -37,6 +37,94 @@ class DemandController extends Controller
     }
 
     /**
+     * Lists all Listing "open" entities.
+     *
+     * @Route("/open", name="demand_open")
+     * @Method("GET")
+     * @Template("OrderBundle:Demand:index.html.twig")
+     */
+    public function OpenAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        //Si l'utilisateur est un reponsable alors
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_VALIDATOR')) {
+            //Entities est égal à toute les demandes uniqement soumise par une requérant
+            $entities = $em->getRepository('OrderBundle:Demand')->findBystatusstatus(1);}
+        //Si l'utilisateur est une personne de la comptabilité alors
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ACCOUNTING')) {
+            //Entites est égal à toute les demandes qui ont été validé par le reponsable
+            $entities = $em->getRepository('OrderBundle:Demand')->findBystatusstatus(2);}
+
+        //Si il n'y aucun demande
+        if (count($entities) > 1) {
+            throw new NotFoundHttpException("Il n'y a pas le moment pas de demande ouverte");
+        }
+        return array(
+            //Renvoie les entities
+            'entities' => $entities,
+        );
+    }
+
+    /**
+     * Lists all Listing "MyValidation" entities.
+     *
+     * @Route("/my_validation", name="my_validation")
+     * @Method("GET")
+     * @Template("OrderBundle:Demand:index.html.twig")
+     */
+    public function MyValidationAction()
+    {
+        //On récupère l'id de l'utilisateur courrant
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user->getId();
+        $em = $this->getDoctrine()->getManager();
+        //Si l'utilisateur courrant est un responsable alors
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_VALIDATOR')) {
+            //Entites est égal à tout les demandes dont le champ validRespIdUser est l'utilisateur courrant
+            $entities = $em->getRepository('OrderBundle:Demand')->findByvalidRespIdUser($user);}
+        //Si l'utilisateur courrant est un comptable alors
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ACCOUNTING')) {
+            //Entites est égal à tout les demandes dont le champ AccouIdUser est l'utilisateur courrant
+            $entities = $em->getRepository('OrderBundle:Demand')->findByvalidAccouIdUser($user);}
+
+        //Si il n'y a pas de demande
+        if (count($entities) > 1) {
+            throw new NotFoundHttpException("Vous n'avez pas encore validé des demandes");
+        }
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+    /**
+     * Lists my Demand entities.
+     *
+     * @Route("/my_demand", name="mydemand")
+     * @Method("GET")
+     * @Template("OrderBundle:Demand:index.html.twig")
+     */
+    public function MydemandAction()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('OrderBundle:Demand')->findBycreaIdUser($user);
+
+
+        /**if (count($entities) > 1) {
+        throw "Erreur";
+        }**/
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+
+    /**
      * Creates a new Demand entity.
      *
      * @Route("/", name="demand_create")
@@ -246,6 +334,7 @@ class DemandController extends Controller
             throw $this->createNotFoundException('Vous n\'êtes pas autorisé à effectuer cette action.');
         }
 
+
         $demand->setStatusstatus($status);
         $em->persist($demand);
         $em->flush();
@@ -336,4 +425,22 @@ class DemandController extends Controller
             ->getForm()
         ;
     }
+
+    public function MailAction(){
+
+        $idRequiring = $demand->getCreaIdUser();
+        $mail = $em->getRepository('OrderBundle:Localuser')->find($idRequiring);
+        $mail = getEmail($mail);
+        $sendto = $mail;
+
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Validation de la commande '.$idDemand)
+            ->setFrom('orderit.donotreply@gmail.com')
+            ->setTo($sendto)
+            ->setBody($this->renderView('OrderBundle:Demand.email.txt.twig', array('idDemand' => $idDemand, 'corps' => 'La demande a été validé')));
+        $this->get('mailer')->send($message);
+
+    }
+
 }

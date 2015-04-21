@@ -18,7 +18,7 @@ class ArticleType extends AbstractType
 
             ->add('description')
             ->add('numeroArticle')
-            #->add('listingListing')
+            ->add('quantity')
         ;
     }
     
