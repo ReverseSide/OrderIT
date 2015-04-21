@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Oracle</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idoracle</th>
+                <td>{{ entity.idOracle }}</td>
+            </tr>
+            <tr>
+                <th>Oracle</th>
+                <td>{{ entity.oracle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('oracle') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('oracle_edit', { 'id': entity.idOracle }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

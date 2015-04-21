@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Oracle list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idoracle</th>
+                <th>Oracle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('oracle_show', { 'id': entity.idOracle }) }}">{{ entity.idOracle }}</a></td>
+                <td>{{ entity.oracle }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('oracle_show', { 'id': entity.idOracle }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('oracle_edit', { 'id': entity.idOracle }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('oracle_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

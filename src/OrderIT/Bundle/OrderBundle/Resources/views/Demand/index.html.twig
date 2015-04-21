@@ -6,10 +6,8 @@
     <table class="records_list table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Numero de commande</th>
                 <th>Date de la référence</th>
-                <th>H</th>
                 <th>Requerant</th>
                 <th>Validé par</th>
                 <th>Comptabilisé par</th>
@@ -23,10 +21,8 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('demand_show', { 'id': entity.idDemand }) }}">{{ entity.idDemand }}</a></td>
                 <td>{{ entity.numeroDemand }}</td>
                 <td>{% if entity.referenceDate %}{{ entity.referenceDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.hfield }}</td>
                 <td>{{ entity.creaIdUser }}</td>
                 <td>{{ entity.validRespIdUser }}</td>
                 <td>{{ entity.validAccouIdUser }}</td>
@@ -35,25 +31,19 @@
                 <td>{% if entity.modDemand %}{{ entity.modDemand|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.amount }}</td>
                 <td>
-                <ul>
-                    <li style="display: inline-block">
-                        <a class="btn btn-info glyphicon glyphicon-search" href="{{ path('demand_show', { 'id': entity.idDemand }) }}"> Voir</a>
-                    </li>
-                    <li style="display: inline-block">
-                        <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('demand_edit', { 'id': entity.idDemand }) }}"> Modifier</a>
-                    </li>
-                </ul>
+                    {% if entity.listingListing %}
+                    <ul class="list-inline">
+                        <li>
+                            <a class="btn btn-info glyphicon glyphicon-search" href="{{ path('listing_show', { 'id': entity.listingListing }) }}"> voir</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('listing_edit', { 'id': entity.listingListing }) }}"> modifier</a>
+                        </li>
+                    </ul>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-        <br>
-        <ul>
-        <li style="display: inline-block" class="pull-right">
-            <a class="btn btn-primary glyphicon glyphicon-inbox" href="{{ path('demand_new') }}">
-                Créer une nouvelle demande
-            </a>
-        </li>
-    </ul>
     {% endblock %}

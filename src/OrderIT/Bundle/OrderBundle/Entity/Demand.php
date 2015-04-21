@@ -8,9 +8,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Demand
  *
- * @ORM\Table(name="demand", indexes={@ORM\Index(name="fk_order_vendor_idx", columns={"vendor_id_vendor"}), @ORM\Index(name="fk_order_delivery1_idx", columns={"delivery_id_delivery"}), @ORM\Index(name="fk_order_status1_idx", columns={"status_idstatus"}), @ORM\Index(name="fk_demand_costcentre1_idx", columns={"costcentre_id_costcentre"}), @ORM\Index(name="fk_demand_proco1_idx", columns={"proco_id_proco"}), @ORM\Index(name="fk_demand_oracle1_idx", columns={"oracle_id_oracle"}), @ORM\Index(name="fk_demand_project1_idx", columns={"project_id_project"}), @ORM\Index(name="fk_demand_sector1_idx", columns={"sector_id_sector"}), @ORM\Index(name="fk_demand_labo1_idx", columns={"labo_id_labo"}), @ORM\Index(name="fk_demand_reference1_idx", columns={"reference_id_reference"})})
+ * @ORM\Table(name="demand", indexes={@ORM\Index(name="fk_order_vendor_idx", columns={"vendor_id_vendor"}),@ORM\Index(name="fk_order_delivery1_idx", columns={"delivery_id_delivery"}),@ORM\Index(name="fk_order_status1_idx", columns={"status_idstatus"}),@ORM\Index(name="fk_demand_costcentre1_idx", columns={"costcentre_id_costcentre"}),@ORM\Index(name="fk_demand_proco1_idx", columns={"proco_id_proco"}),@ORM\Index(name="fk_demand_localuser_idx", columns={"localuser_crea_id_user"}),@ORM\Index(name="fk_demand_localuser1_idx", columns={"localuser_resp_id_user"}),@ORM\Index(name="fk_demand_localuser2_idx", columns={"localuser_acc_id_user"}),@ORM\Index(name="fk_demand_oracle1_idx", columns={"oracle_id_oracle"}),@ORM\Index(name="fk_demand_project1_idx", columns={"project_id_project"}),@ORM\Index(name="fk_demand_sector1_idx", columns={"sector_id_sector"}),@ORM\Index(name="fk_demand_labo1_idx", columns={"labo_id_labo"}),@ORM\Index(name="fk_demand_reference1_idx", columns={"reference_id_reference"})})
  * @ORM\Entity
  */
+
 class Demand
 {
     public function __toString() {
@@ -29,7 +30,7 @@ class Demand
     /**
      * @var string
      *
-     * @ORM\Column(name="numero_demand", type="decimal", precision=8, scale=0, nullable=false)
+     * @ORM\Column(name="numero_demand", type="string", length=8, nullable=false)
      */
     private $numeroDemand;
 
@@ -62,23 +63,34 @@ class Demand
     private $amount;
 
     /**
-     * @var integer
+     * @var \Localuser
      *
-     * @ORM\Column(name="crea_id_user", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="localuser_crea_id_user", referencedColumnName="id")
+     * })
      */
+
+
     private $creaIdUser;
 
     /**
-     * @var integer
+     * @var \Localuser
      *
-     * @ORM\Column(name="valid_resp_id_user", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="localuser_resp_id_user", referencedColumnName="id")
+     * })
      */
     private $validRespIdUser;
 
     /**
-     * @var integer
+     * @var \Localuser
      *
-     * @ORM\Column(name="valid_accou_id_user", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="localuser_acc_id_user", referencedColumnName="id")
+     * })
      */
     private $validAccouIdUser;
 
@@ -100,7 +112,7 @@ class Demand
     /**
      * @var \Costcentre
      *
-     * @ORM\ManyToOne(targetEntity="Costcentre")
+     * @ORM\ManyToOne(targetEntity="Costcentre",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="costcentre_id_costcentre", referencedColumnName="id_costcentre")
      * })
@@ -110,7 +122,7 @@ class Demand
     /**
      * @var \Labo
      *
-     * @ORM\ManyToOne(targetEntity="Labo")
+     * @ORM\ManyToOne(targetEntity="Labo",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="labo_id_labo", referencedColumnName="id_labo")
      * })
@@ -120,7 +132,7 @@ class Demand
     /**
      * @var \Oracle
      *
-     * @ORM\ManyToOne(targetEntity="Oracle")
+     * @ORM\ManyToOne(targetEntity="Oracle",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="oracle_id_oracle", referencedColumnName="id_oracle")
      * })
@@ -130,7 +142,7 @@ class Demand
     /**
      * @var \Proco
      *
-     * @ORM\ManyToOne(targetEntity="Proco")
+     * @ORM\ManyToOne(targetEntity="Proco",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="proco_id_proco", referencedColumnName="id_proco")
      * })
@@ -150,7 +162,7 @@ class Demand
     /**
      * @var \Reference
      *
-     * @ORM\ManyToOne(targetEntity="Reference")
+     * @ORM\ManyToOne(targetEntity="Reference",cascade={"persist"}))
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="reference_id_reference", referencedColumnName="id_reference")
      * })
@@ -160,7 +172,7 @@ class Demand
     /**
      * @var \Sector
      *
-     * @ORM\ManyToOne(targetEntity="Sector")
+     * @ORM\ManyToOne(targetEntity="Sector",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sector_id_sector", referencedColumnName="id_sector")
      * })
@@ -185,7 +197,7 @@ class Demand
      *   @ORM\JoinColumn(name="status_idstatus", referencedColumnName="id_status")
      * })
      */
-    private $statusstatus;
+    private $statusstatus = 1;
 
     /**
      * @var \Vendor
@@ -197,6 +209,12 @@ class Demand
      */
     private $vendorVendor;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="current_listing", type="string", length=8, nullable=false)
+     */
+    private $listingListing;
 
 
     /**
@@ -645,6 +663,30 @@ class Demand
     {
         return $this->statusstatus;
     }
+
+    /**
+     * Set listingListing
+     *
+     * @param \OrderIT\Bundle\OrderBundle\Entity\Listing $listingListing
+     * @return Demand
+     */
+    public function setListingListing(\OrderIT\Bundle\OrderBundle\Entity\Status $listingListing)
+    {
+        $this->listingListing = $listingListing;
+
+        return $this;
+    }
+
+    /**
+     * Get listingListing
+     *
+     * @return \OrderIT\Bundle\OrderBundle\Entity\Listing
+     */
+    public function getListingListing()
+    {
+        return $this->listingListing;
+    }
+
 
     /**
      * Set vendorVendor

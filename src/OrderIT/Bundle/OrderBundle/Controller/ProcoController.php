@@ -3,29 +3,25 @@
 namespace OrderIT\Bundle\OrderBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use OrderIT\Bundle\OrderBundle\Entity\Listing;
-use OrderIT\Bundle\OrderBundle\Form\ListingType;
-
-
+use OrderIT\Bundle\OrderBundle\Entity\Proco;
+use OrderIT\Bundle\OrderBundle\Form\ProcoType;
 
 /**
- * Listing controller.
+ * Proco controller.
  *
- * @Route("/listing")
- *
+ * @Route("/proco")
  */
-class ListingController extends Controller
+class ProcoController extends Controller
 {
 
     /**
-     * Lists all Listing entities.
+     * Lists all Proco entities.
      *
-     * @Route("/", name="listing")
+     * @Route("/", name="proco")
      * @Method("GET")
      * @Template()
      */
@@ -33,23 +29,22 @@ class ListingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OrderBundle:Listing')->findAll();
+        $entities = $em->getRepository('OrderBundle:Proco')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
-
     /**
-     * Creates a new Listing entity.
+     * Creates a new Proco entity.
      *
-     * @Route("/", name="listing_create")
+     * @Route("/", name="proco_create")
      * @Method("POST")
-     * @Template("OrderBundle:Listing:new.html.twig")
+     * @Template("OrderBundle:Proco:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Listing();
+        $entity = new Proco();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -58,10 +53,7 @@ class ListingController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $idListing = getIdListing($entity);
-            print $idListing;
-
-            return $this->redirect($this->generateUrl('listing_show', array('id' => $entity->getIdListing())));
+            return $this->redirect($this->generateUrl('proco_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -71,16 +63,16 @@ class ListingController extends Controller
     }
 
     /**
-     * Creates a form to create a Listing entity.
+     * Creates a form to create a Proco entity.
      *
-     * @param Listing $entity The entity
+     * @param Proco $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Listing $entity)
+    private function createCreateForm(Proco $entity)
     {
-        $form = $this->createForm(new ListingType(), $entity, array(
-            'action' => $this->generateUrl('listing_create'),
+        $form = $this->createForm(new ProcoType(), $entity, array(
+            'action' => $this->generateUrl('proco_create'),
             'method' => 'POST',
         ));
 
@@ -90,15 +82,15 @@ class ListingController extends Controller
     }
 
     /**
-     * Displays a form to create a new Listing entity.
+     * Displays a form to create a new Proco entity.
      *
-     * @Route("/new", name="listing_new")
+     * @Route("/new", name="proco_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Listing();
+        $entity = new Proco();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -108,9 +100,9 @@ class ListingController extends Controller
     }
 
     /**
-     * Finds and displays a Listing entity.
+     * Finds and displays a Proco entity.
      *
-     * @Route("/{id}", name="listing_show")
+     * @Route("/{id}", name="proco_show")
      * @Method("GET")
      * @Template()
      */
@@ -118,10 +110,10 @@ class ListingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('OrderBundle:Listing')->find($id);
+        $entity = $em->getRepository('OrderBundle:Proco')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Listing entity.');
+            throw $this->createNotFoundException('Unable to find Proco entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -133,41 +125,9 @@ class ListingController extends Controller
     }
 
     /**
-     * Finds a Listing entity for create a pdf
+     * Displays a form to edit an existing Proco entity.
      *
-     * @Route("/{id}/pdf", name="listing_pdf")
-     * @Method("GET")
-     * @Template()
-     */
-    public function PdfAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('OrderBundle:Listing')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Listing entity.');
-        }
-        $deleteForm = $this->createDeleteForm($id);
-        $html = $this->renderView('OrderBundle:Listing:pdf.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
-
-        return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            200,
-            array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="demand'.$id.'.pdf"'
-            )
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Listing entity.
-     *
-     * @Route("/{id}/edit", name="listing_edit")
+     * @Route("/{id}/edit", name="proco_edit")
      * @Method("GET")
      * @Template()
      */
@@ -175,10 +135,10 @@ class ListingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('OrderBundle:Listing')->find($id);
+        $entity = $em->getRepository('OrderBundle:Proco')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Listing entity.');
+            throw $this->createNotFoundException('Unable to find Proco entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -192,16 +152,16 @@ class ListingController extends Controller
     }
 
     /**
-    * Creates a form to edit a Listing entity.
+    * Creates a form to edit a Proco entity.
     *
-    * @param Listing $entity The entity
+    * @param Proco $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Listing $entity)
+    private function createEditForm(Proco $entity)
     {
-        $form = $this->createForm(new ListingType(), $entity, array(
-            'action' => $this->generateUrl('listing_update', array('id' => $entity->getIdListing())),
+        $form = $this->createForm(new ProcoType(), $entity, array(
+            'action' => $this->generateUrl('proco_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -210,20 +170,20 @@ class ListingController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Listing entity.
+     * Edits an existing Proco entity.
      *
-     * @Route("/{id}", name="listing_update")
+     * @Route("/{id}", name="proco_update")
      * @Method("PUT")
-     * @Template("OrderBundle:Listing:edit.html.twig")
+     * @Template("OrderBundle:Proco:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('OrderBundle:Listing')->find($id);
+        $entity = $em->getRepository('OrderBundle:Proco')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Listing entity.');
+            throw $this->createNotFoundException('Unable to find Proco entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -233,7 +193,7 @@ class ListingController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('listing_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('proco_edit', array('id' => $id)));
         }
 
         return array(
@@ -243,9 +203,9 @@ class ListingController extends Controller
         );
     }
     /**
-     * Deletes a Listing entity.
+     * Deletes a Proco entity.
      *
-     * @Route("/{id}", name="listing_delete")
+     * @Route("/{id}", name="proco_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -255,21 +215,21 @@ class ListingController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('OrderBundle:Listing')->find($id);
+            $entity = $em->getRepository('OrderBundle:Proco')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Listing entity.');
+                throw $this->createNotFoundException('Unable to find Proco entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('listing'));
+        return $this->redirect($this->generateUrl('proco'));
     }
 
     /**
-     * Creates a form to delete a Listing entity by id.
+     * Creates a form to delete a Proco entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -278,11 +238,10 @@ class ListingController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('listing_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('proco_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
-
 }
