@@ -98,6 +98,33 @@ class DemandController extends Controller
     }
 
     /**
+     * Lists all Listing "Need modification" entities.
+     *
+     * @Route("/need_modification", name="need_modification")
+     * @Method("GET")
+     * @Template("OrderBundle:Demand:index.html.twig")
+     */
+    public function NeedModificationAction()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('OrderBundle:Demand')->findBycreaIdUser($user);
+
+
+        /**if (count($entities) > 1) {
+        throw "Erreur";
+        }**/
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+
+    /**
      * Lists my Demand entities.
      *
      * @Route("/my_demand", name="mydemand")
@@ -300,12 +327,13 @@ class DemandController extends Controller
      */
     public function validAction($idDemand)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
         if (!$demand) {
             throw $this->createNotFoundException('Unable to find Demand entity.');
         }
-
         // Si la personne est un responsable
         if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
 
@@ -313,11 +341,9 @@ class DemandController extends Controller
             if (!$status) {
                 $status = new Status();
                 $status.setId(2);
+
             }
-
-
         }
-
         //Si la personne est une personne du service comptable
         else if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')) {
 
@@ -326,20 +352,27 @@ class DemandController extends Controller
                 $status = new Status();
                 $status.setId(3);
             }
-
         }
-
         else {
 
             throw $this->createNotFoundException('Vous n\'êtes pas autorisé à effectuer cette action.');
         }
-
-
         $demand->setStatusstatus($status);
         $em->persist($demand);
         $em->flush();
+        if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
+            //Set champ localuser_acc_id_user avec l'id de l'utilisateur courrant
+            $demand->setValidAccouIdUser($user);
+        }
+        if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')){
+            //Set champ localuser_resp_id_user avec l'id de l'utilisateur courrant
+            $demand->setValidRespIdUser($user);
+        }
+        $em->persist($demand);
+        $em->flush();
 
-        return $this->redirect($this->generateUrl('listing'));
+        //Redirection vers mes listes
+        return $this->redirect($this->generateUrl('my_validation'));
     }
 
     /**

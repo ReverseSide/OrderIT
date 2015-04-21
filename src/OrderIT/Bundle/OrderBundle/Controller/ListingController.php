@@ -82,7 +82,7 @@ class ListingController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Créer'));
 
         return $form;
     }
@@ -140,18 +140,20 @@ class ListingController extends Controller
     public function PdfAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        //Entity est égal à l'enregistrement $id
         $entity = $em->getRepository('OrderBundle:Listing')->find($id);
-
+        //Si vide alors
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Listing entity.');
+            //Generation de l'erreur
+            throw $this->createNotFoundException('Impossible de trouve cette demande');
         }
         $deleteForm = $this->createDeleteForm($id);
+        //appel la vue twig pour formater pour les pdf
         $html = $this->renderView('OrderBundle:Listing:pdf.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
-
+        //retourne le fichier pdf, il sera nommé "demand $id .pfd"
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,

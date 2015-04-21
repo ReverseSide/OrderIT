@@ -29,7 +29,7 @@ class Demand
     /**
      * @var string
      *
-     * @ORM\Column(name="numero_demand", type="decimal", precision=8, scale=0, nullable=false)
+     * @ORM\Column(name="numero_demand", type="string", length=8, nullable=false)
      */
     private $numeroDemand;
 
@@ -185,7 +185,7 @@ class Demand
      *   @ORM\JoinColumn(name="status_idstatus", referencedColumnName="id_status")
      * })
      */
-    private $statusstatus;
+    private $statusstatus ="1";
 
     /**
      * @var \Vendor
@@ -197,12 +197,19 @@ class Demand
      */
     private $vendorVendor;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="current_id_listing", type="integer", nullable=true)
+     */
+    private $idlisting;
+
 
 
     /**
      * Get idDemand
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdDemand()
     {
@@ -386,12 +393,36 @@ class Demand
     /**
      * Get validAccouIdUser
      *
-     * @return integer 
+     * @return integer
      */
     public function getValidAccouIdUser()
     {
         return $this->validAccouIdUser;
     }
+
+    /**
+     * Set idlisting
+     *
+     * @param integer $idlisting
+     * @return Demand
+     */
+    public function setidlisting($idlisting)
+    {
+        $this->idlisting = $idlisting;
+
+        return $this;
+    }
+
+    /**
+     * Get idlisting
+     *
+     * @return integer
+     */
+    public function getidlisting()
+    {
+        return $this->idlisting;
+    }
+
 
     /**
      * Set creaDemand
