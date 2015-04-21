@@ -58,6 +58,9 @@ class ListingController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $idListing = getIdListing($entity);
+            print $idListing;
+
             return $this->redirect($this->generateUrl('listing_show', array('id' => $entity->getIdListing())));
         }
 
