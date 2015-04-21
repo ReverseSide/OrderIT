@@ -23,12 +23,12 @@
                     {# Si l'utilisateur est un responsable ou une personne de service comptable#}
                     {% if is_granted('ROLE_VALIDATOR') or is_granted('ROLE_ACCOUNTING') %}
                         <li>
-                            <a href="{{ path('demand_open') }}">
+                            <a href="{{ path('mydemand') }}">
                                 Demande ouverte
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('my_validation') }}">
+                            <a href="{{ path('mydemand') }}">
                                 Mes validations
                             </a>
                         </li>

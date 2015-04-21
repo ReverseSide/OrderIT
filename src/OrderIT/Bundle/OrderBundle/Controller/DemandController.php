@@ -3,7 +3,6 @@
 namespace OrderIT\Bundle\OrderBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -36,84 +35,6 @@ class DemandController extends Controller
             'entities' => $entities,
         );
     }
-    /**
-     * Lists all Listing "open" entities.
-     *
-     * @Route("/open", name="demand_open")
-     * @Method("GET")
-     * @Template("OrderBundle:Demand:index.html.twig")
-     */
-    public function OpenAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_VALIDATOR')) {
-            $entities = $em->getRepository('OrderBundle:Demand')->findBystatusstatus(1);}
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ACCOUNTING')) {
-            $entities = $em->getRepository('OrderBundle:Demand')->findBystatusstatus(2);}
-
-        /**if (count($entities) > 1) {
-            throw new NotFoundHttpException("Il n'y a pas le moment pas de demande ouverte");
-        }**/
-        return array(
-            'entities' => $entities,
-        );
-    }
-
-    /**
-     * Lists all Listing "MyValidation" entities.
-     *
-     * @Route("/my_validation", name="my_validation")
-     * @Method("GET")
-     * @Template("OrderBundle:Demand:index.html.twig")
-     */
-    public function MyValidationAction()
-    {
-
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $user->getId();
-        $em = $this->getDoctrine()->getManager();
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_VALIDATOR')) {
-            $entities = $em->getRepository('OrderBundle:Demand')->findByvalidRespIdUser($user);}
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ACCOUNTING')) {
-            $entities = $em->getRepository('OrderBundle:Demand')->findByvalidAccouIdUser($user);}
-
-        /**if (count($entities) > 1) {
-        throw new NotFoundHttpException("Il n'y a pas le moment pas de demande ouverte");
-        }**/
-        return array(
-            'entities' => $entities,
-        );
-    }
-
-    /**
-     * Lists my Demand entities.
-     *
-     * @Route("/my_demand", name="mydemand")
-     * @Method("GET")
-     * @Template("OrderBundle:Demand:index.html.twig")
-     */
-    public function MyDemandAction()
-    {
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $user->getId();
-
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('OrderBundle:Demand')->findBycreaIdUser($user);
-
-
-        /**if (count($entities) > 1) {
-        throw "Erreur";
-        }**/
-
-        return array(
-            'entities' => $entities,
-        );
-    }
 
     /**
      * Creates a new Demand entity.
@@ -132,7 +53,6 @@ class DemandController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
 
             return $this->redirect($this->generateUrl('demand_show', array('id' => $entity->getIdDemand())));
         }

@@ -26,9 +26,9 @@ class Article
     private $idArticle;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="numero_article", type="integer", nullable=true)
+     * @ORM\Column(name="numero_article", type="string", length=45, nullable=true)
      */
     private $numeroArticle;
 
@@ -38,6 +38,14 @@ class Article
      * @ORM\Column(name="description", type="string", length=45, nullable=true)
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="quantity", type="integer", nullable=true)
+     */
+    private $quantity;
+
 
     /**
      * @var \Doctrine\Common\Collections\Collection

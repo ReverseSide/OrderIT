@@ -6,67 +6,57 @@
     {{ form_start(edit_form) }}
     {{ form_errors(edit_form) }}
 
-    <div id="Livraison" class="col-md-5" >
-        Numero de commande : {{ entity.demandDemand.numeroDemand }}<br>
-        Nom du projet : {{ entity.demandDemand.projectProject.project }}<br><br>
-        <h5>Lieu de livraison :</h5>
-        {{ entity.demandDemand.deliveryDelivery.name }}<br>
-        Case Postal {{ entity.demandDemand.deliveryDelivery.postoffice }}<br>
-        {{ entity.demandDemand.deliveryDelivery.adress }}<br>
-        {{ entity.demandDemand.deliveryDelivery.postcode }}<br>
-        {{ entity.demandDemand.deliveryDelivery.telephone }}<br>
-        {{ entity.demandDemand.deliveryDelivery.fax }}<br>
+    <div id="DemandInfo" class="col-md-5">
+        <div class="col-lg-11">
+            {{ form_row(edit_form.demandDemand.numeroDemand) }}
+            {{ form_row(edit_form.demandDemand.projectProject) }}
+            <div id="DemandDelivery">
+                {{ form_row(edit_form.demandDemand.deliveryDelivery) }}
+            </div>
+        </div>
     </div>
-
-    <div id="Fournisseur" class="col-md-6" >
-
-        <h5>FOURNISSEUR</h5>
-        {{ entity.demandDemand.VendorVendor.name }}<br>
-        Case Postal {{ entity.demandDemand.VendorVendor.postofficebox }}<br>
-        {{ entity.demandDemand.VendorVendor.adress }}<br>
-        {{ entity.demandDemand.VendorVendor.postcode }}
-        {{ entity.demandDemand.VendorVendor.locality }}<br>
-        {{ entity.demandDemand.VendorVendor.telephone }}<br>
-        {{ entity.demandDemand.VendorVendor.fax }}<br>
+    <div id="DemandVendor" class="col-md-5">
+        <div class="col-lg-11">
+            {{ form_row(edit_form.demandDemand.vendorVendor) }}
+        </div>
     </div>
-    <div id="Article" class="col-md-10">
-        <br>A l'attention de: {{ entity.demandDemand.creaIdUser }}<br>
-        Selon offre réf.
-        {{ entity.demandDemand.referenceReference.reference }} du
-        {{ entity.demandDemand.referenceDate |date('Y-m-d') }}<br><br>
+    <div id="DemandReference" class="col-md-12">
+        <div class="col-lg-5">
+            {{ form_row(edit_form.demandDemand.referenceReference) }}
+        </div>
+        <div class="col-lg-5">
+            {{ form_row(edit_form.demandDemand.referenceDate) }}
+        </div>
     </div>
     <div id="DemandArticle" class="col-md-12">
         {{ form_row(edit_form.articleArticle) }}
     </div>
     <div id="DemandCompta" class="col-md-12">
-        <div class="col-lg-12">
-            <h4>Observation : </h4>{{ entity.demandDemand.observation }}
+        {{ form_row(edit_form.demandDemand.observation) }}
+        <div class="col-lg-4">
+            {{ form_row(edit_form.demandDemand.procoProco) }}
         </div>
         <div class="col-lg-4">
-            <strong> Proco : </strong>{{ entity.demandDemand.procoProco }}
-        </div>
-        <div class="col-lg-4">
-            <strong> Labo : </strong>{{ entity.demandDemand.laboLabo }}
+            {{ form_row(edit_form.demandDemand.laboLabo) }}
         </div>
         <div class="col-lg-5">
-            <strong> Oracle : </strong>{{ entity.demandDemand.oracleOracle}}
+            {{ form_row(edit_form.demandDemand.oracleOracle) }}
         </div>
         <div class="col-lg-2">
-            <strong> Centre de coût : </strong>{{ form_row(edit_form.demandDemand.costcentreCostcentre) }}
+            {{ form_row(edit_form.demandDemand.costcentreCostcentre) }}
         </div>
         <div class="col-lg-1">
-            <strong> H : </strong>{{ entity.demandDemand.hfield }}
+            {{ form_row(edit_form.demandDemand.hfield) }}
         </div>
         <div class="col-lg-2">
-            <strong> Filière : </strong>{{ entity.demandDemand.sectorSector }}
+            {{ form_row(edit_form.demandDemand.sectorSector) }}
         </div>
         <div class="col-lg-2">
-            <strong> Montant : </strong>{{ form_row(edit_form.demandDemand.amount) }}
+            {{ form_row(edit_form.demandDemand.amount) }}
         </div>
     </div>
-
     <div id="DemandAction" class="col-md-12">
-
+        {{ form_end(edit_form) }}
 
         <ul class="record_actions">
             <li>

@@ -39,6 +39,31 @@ class ListingController extends Controller
             'entities' => $entities,
         );
     }
+    /**
+     * Lists my Demand entities.
+     *
+     * @Route("/my_demand", name="mydemand")
+     * @Method("GET")
+     * @Template("OrderBundle:Listing:index.html.twig")
+     */
+    public function MydemandAction()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('OrderBundle:Listing')->findAll();
+
+
+        /**if (count($entities) > 1) {
+            throw "Erreur";
+        }**/
+
+        return array(
+            'entities' => $entities,
+        );
+    }
 
     /**
      * Creates a new Listing entity.
@@ -57,9 +82,6 @@ class ListingController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            $idListing = getIdListing($entity);
-            print $idListing;
 
             return $this->redirect($this->generateUrl('listing_show', array('id' => $entity->getIdListing())));
         }

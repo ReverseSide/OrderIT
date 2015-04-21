@@ -13,11 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Localuser extends BaseUser implements LdapUserInterface
 {
     /**
-     * @var integer
-     *
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
     /**
