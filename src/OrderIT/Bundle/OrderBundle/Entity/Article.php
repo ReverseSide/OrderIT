@@ -129,7 +129,7 @@ class Article
      */
     public function setQuantity($quantity)
     {
-        $this->description = $quantity;
+        $this->quantity = $quantity;
 
         return $this;
     }

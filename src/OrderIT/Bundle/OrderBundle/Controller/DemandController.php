@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use OrderIT\Bundle\OrderBundle\Entity\Demand;
 use OrderIT\Bundle\OrderBundle\Form\DemandType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Demand controller.
@@ -56,8 +57,8 @@ class DemandController extends Controller
             $entities = $em->getRepository('OrderBundle:Demand')->findBystatusstatus(2);}
 
         //Si il n'y aucun demande
-        if (count($entities) > 1) {
-            throw new NotFoundHttpException("Il n'y a pas le moment pas de demande ouverte");
+        if (count($entities) == 0) {
+            throw new NotFoundHttpException("Il n'y a pas le moment pas de demande en attente");
         }
         return array(
             //Renvoie les entities
@@ -88,7 +89,7 @@ class DemandController extends Controller
             $entities = $em->getRepository('OrderBundle:Demand')->findByvalidAccouIdUser($user);}
 
         //Si il n'y a pas de demande
-        if (count($entities) > 1) {
+        if (count($entities) == 1) {
             throw new NotFoundHttpException("Vous n'avez pas encore validé des demandes");
         }
 
@@ -362,11 +363,11 @@ class DemandController extends Controller
         $em->flush();
         if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
             //Set champ localuser_acc_id_user avec l'id de l'utilisateur courrant
-            $demand->setValidAccouIdUser($user);
+            $demand->setValidRespIdUser($user);
         }
         if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')){
             //Set champ localuser_resp_id_user avec l'id de l'utilisateur courrant
-            $demand->setValidRespIdUser($user);
+            $demand->setValidAccouIdUser($user);
         }
         $em->persist($demand);
         $em->flush();
