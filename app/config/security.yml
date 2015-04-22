@@ -2,6 +2,7 @@ security:
     encoders:
         OrderIT\Bundle\OrderBundle\Entity\Localuser: sha512
 
+    #déclaration de hértiage et groupe de sécurité de l'application
     role_hierarchy:
         ROLE_REQUIRING:   ROLE_USER
         ROLE_VALIDATOR:   ROLE_USER
@@ -9,31 +10,43 @@ security:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
+    #Fournisseur d'identification
     providers:
+        #On fourmit en chaine les fournisseurs d'identification
         chain_provider:
             chain:
+                #D'habord le local puis sur LDAP
                 providers: [fos_userbundle, fr3d_ldapbundle]
+        #Chemin des services d'identificaiton
         fr3d_ldapbundle:
             id: fr3d_ldap.security.user.provider
         fos_userbundle:
             id: fos_user.user_manager
 
+    #Règle de firewall
     firewalls:
+        #en mode développement on alloue le droit à la barre de débugage
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        #règle générale
         main:
             pattern: ^/
             fr3d_ldap: ~
+            #renseigne sur le formulaire d'identification
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 always_use_default_target_path: true
+                #Redirection par défaut après identification
                 default_target_path: /listing
             logout: true
             anonymous: true
 
+    #Règle d'accès des différents chemin
     access_control:
+        #Accèder au url /login est autorisé au personne identifiée comme anonyme (donc non identifiée)
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login,          roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #Toute les autres url nécessite d'être identifié totalement
         - { path: ^/,               roles: IS_AUTHENTICATED_FULLY}
