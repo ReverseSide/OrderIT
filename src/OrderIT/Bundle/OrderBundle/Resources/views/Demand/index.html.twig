@@ -3,40 +3,35 @@
 {% block body -%}
     <h1>Liste des commandes</h1>
     <br>
-    <table class="records_list table-striped">
-        <thead>
+    <table class="table table-responsive table-striped">
+        <thead class="records_list">
             <tr>
                 <th>Numero de commande</th>
-                <th>Date de la référence</th>
+                <th>Statut</th>
                 <th>Requerant</th>
                 <th>Validé par</th>
                 <th>Comptabilisé par</th>
-                <th>Observation</th>
                 <th>Date de création</th>
                 <th>Date de modification</th>
                 <th>Montant</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="records_list table-responsive table-striped">
         {% for entity in entities %}
             <tr>
                 <td>{{ entity.numeroDemand }}</td>
-                <td>{% if entity.referenceDate %}{{ entity.referenceDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.statusstatus }}</td>
                 <td>{{ entity.creaIdUser }}</td>
-                <td>{{ entity.validRespIdUser }}</td>
-                <td>{{ entity.validAccouIdUser }}</td>
-                <td>{{ entity.observation }}</td>
-                <td>{% if entity.creaDemand %}{{ entity.creaDemand|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.modDemand %}{{ entity.modDemand|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.validRespIduser %}{{ entity.validRespIdUser }}{% endif %}</td>
+                <td>{% if entity.validAccouIdUser %}{{ entity.validAccouIdUser }}{% endif %}</td>
+                <td>{% if entity.creaDemand %}{{ entity.creaDemand|date('d/m/Y H:i:s') }}{% endif %}</td>
+                <td>{% if entity.modDemand %}{{ entity.modDemand|date('d/m/Y H:i:s') }}{% endif %}</td>
                 <td>{{ entity.amount }}</td>
                 <td>
                     <ul class="list-inline">
                         <li>
-                            <a class="btn btn-info glyphicon glyphicon-search" href="{{ path('listing_show', { 'id': entity.idlisting }) }}"> voir</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-warning glyphicon glyphicon-pencil" href="{{ path('listing_edit', { 'id': entity.idlisting }) }}"> modifier</a>
+                            {% if entity.idListing %}<a class="btn btn-info glyphicon glyphicon-search" href="{{ path('listing_show', { 'id': entity.idlisting }) }}"> voir</a>{% endif %}
                         </li>
                     </ul>
                 </td>

@@ -55,9 +55,18 @@ class ListingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            //récuprer l'id de l'utilisateur courant
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $user = $user->getId();
             $em = $this->getDoctrine()->getManager();
+            //set le statut à 1
+            $status= $em->getRepository('OrderBundle:Status')->find(1);
+            $entity->getDemandDemand()->setStatusstatus($status);
+            $usercreat= $em->getRepository('OrderBundle:Localuser')->find($user);
+            $entity->getDemandDemand()->setCreaIdUser($usercreat);
             $em->persist($entity);
             $em->flush();
+
 
             return $this->redirect($this->generateUrl('listing_show', array('id' => $entity->getIdListing())));
         }

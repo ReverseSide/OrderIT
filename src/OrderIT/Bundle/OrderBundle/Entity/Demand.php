@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Demand
  *
- * @ORM\Table(name="demand", indexes={@ORM\Index(name="fk_order_vendor_idx", columns={"vendor_id_vendor"}), @ORM\Index(name="fk_order_delivery1_idx", columns={"delivery_id_delivery"}), @ORM\Index(name="fk_order_status1_idx", columns={"status_idstatus"}), @ORM\Index(name="fk_demand_costcentre1_idx", columns={"costcentre_id_costcentre"}), @ORM\Index(name="fk_demand_proco1_idx", columns={"proco_id_proco"}), @ORM\Index(name="fk_demand_oracle1_idx", columns={"oracle_id_oracle"}), @ORM\Index(name="fk_demand_project1_idx", columns={"project_id_project"}), @ORM\Index(name="fk_demand_sector1_idx", columns={"sector_id_sector"}), @ORM\Index(name="fk_demand_labo1_idx", columns={"labo_id_labo"}), @ORM\Index(name="fk_demand_reference1_idx", columns={"reference_id_reference"})})
+ * @ORM\Table(name="demand", indexes={@ORM\Index(name="fk_order_vendor_idx", columns={"vendor_id_vendor"}),@ORM\Index(name="fk_order_delivery1_idx", columns={"delivery_id_delivery"}),@ORM\Index(name="fk_order_status1_idx", columns={"status_idstatus"}),@ORM\Index(name="fk_demand_costcentre1_idx", columns={"costcentre_id_costcentre"}),@ORM\Index(name="fk_demand_proco1_idx", columns={"proco_id_proco"}),@ORM\Index(name="fk_demand_localuser_idx", columns={"localuser_crea_id_user"}),@ORM\Index(name="fk_demand_localuser1_idx", columns={"localuser_resp_id_user"}),@ORM\Index(name="fk_demand_localuser2_idx", columns={"localuser_acc_id_user"}),@ORM\Index(name="fk_demand_oracle1_idx", columns={"oracle_id_oracle"}),@ORM\Index(name="fk_demand_project1_idx", columns={"project_id_project"}),@ORM\Index(name="fk_demand_sector1_idx", columns={"sector_id_sector"}),@ORM\Index(name="fk_demand_labo1_idx", columns={"labo_id_labo"}),@ORM\Index(name="fk_demand_reference1_idx", columns={"reference_id_reference"})})
  * @ORM\Entity
  */
 class Demand
@@ -17,6 +17,11 @@ class Demand
 
         return $this->getIdDemand();
     }
+
+    public function __construct() {
+
+    }
+
     /**
      * @var integer
      *
@@ -62,23 +67,34 @@ class Demand
     private $amount;
 
     /**
-     * @var integer
+     * @var Localuser $creaIdUser
      *
-     * @ORM\Column(name="localuser_crea_id_user", type="integer", nullable=false)
+     * @Gedmo\Blameable(on="create")
+     *
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="localuser_crea_id_user", referencedColumnName="id")
+     * })
      */
     private $creaIdUser;
 
     /**
-     * @var integer
+     * @var \Localuser
      *
-     * @ORM\Column(name="localuser_resp_id_user", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="localuser_resp_id_user", referencedColumnName="id")
+     * })
      */
     private $validRespIdUser;
 
     /**
-     * @var integer
+     * @var \Localuser
      *
-     * @ORM\Column(name="localuser_acc_id_user", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="localuser_acc_id_user", referencedColumnName="id")
+     * })
      */
     private $validAccouIdUser;
 
@@ -185,7 +201,7 @@ class Demand
      *   @ORM\JoinColumn(name="status_idstatus", referencedColumnName="id_status")
      * })
      */
-    private $statusstatus ="1";
+    private $statusstatus;
 
     /**
      * @var \Vendor

@@ -372,8 +372,21 @@ class DemandController extends Controller
         $em->persist($demand);
         $em->flush();
 
+        $idRequiring = $demand->getCreaIdUser();
+        $mail = $em->getRepository('OrderBundle:Localuser')->find($idRequiring);
+        $mail = getEmail($mail);
+        $sendto = $mail;
+
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Validation de la commande '.$idDemand)
+            ->setFrom('orderit.donotreply@gmail.com')
+            ->setTo($sendto)
+            ->setBody($this->renderView('OrderBundle:Demand.email.txt.twig', array('idDemand' => $idDemand, 'corps' => 'La demande a été validé')));
+        $this->get('mailer')->send($message);
+
         //Redirection vers mes listes
-        return $this->redirect($this->generateUrl('my_validation'));
+        //return $this->redirect($this->generateUrl('my_validation'));
     }
 
     /**
@@ -460,21 +473,5 @@ class DemandController extends Controller
         ;
     }
 
-    public function MailAction(){
-
-        $idRequiring = $demand->getCreaIdUser();
-        $mail = $em->getRepository('OrderBundle:Localuser')->find($idRequiring);
-        $mail = getEmail($mail);
-        $sendto = $mail;
-
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Validation de la commande '.$idDemand)
-            ->setFrom('orderit.donotreply@gmail.com')
-            ->setTo($sendto)
-            ->setBody($this->renderView('OrderBundle:Demand.email.txt.twig', array('idDemand' => $idDemand, 'corps' => 'La demande a été validé')));
-        $this->get('mailer')->send($message);
-
-    }
 
 }
