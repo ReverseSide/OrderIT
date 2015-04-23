@@ -328,62 +328,48 @@ class DemandController extends Controller
      */
     public function validAction($idDemand)
     {
+
+        $em = $this->getDoctrine()->getManager();
+        //récupère l'id de l'user courant
         $user = $this->container->get('security.context')->getToken()->getUser();
         $user = $user->getId();
-        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('OrderBundle:Localuser')->find($user);
+        //Set objet demand
         $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
+        //Récupère le mail des personnes ayant un role dans la demande
+        $mail = $this->giveEmailDemand($demand);
+        //Récupère le numéro de la commande
+        $demandnumber = $demand->getNumeroDemand();
+        //on constitue le sujet du mail
+        $subject = 'Validation de la commande '.$demandnumber;
+        //On appelle la fonction qui envoie le mail
+        $this->sendMail($subject,$mail);
         if (!$demand) {
             throw $this->createNotFoundException('Unable to find Demand entity.');
         }
         // Si la personne est un responsable
         if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
-
+            //récupère l'objet statut Validé par le responsable
             $status= $em->getRepository('OrderBundle:Status')->find(2);
-            if (!$status) {
-                $status = new Status();
-                $status.setId(2);
-
-            }
-        }
-        //Si la personne est une personne du service comptable
-        else if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')) {
-
-            $status= $em->getRepository('OrderBundle:Status')->find(3);
-            if (!$status) {
-                $status = new Status();
-                $status.setId(3);
-            }
-        }
-        else {
-
-            throw $this->createNotFoundException('Vous n\'êtes pas autorisé à effectuer cette action.');
-        }
-        $demand->setStatusstatus($status);
-        $em->persist($demand);
-        $em->flush();
-        if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
             //Set champ localuser_acc_id_user avec l'id de l'utilisateur courrant
             $demand->setValidRespIdUser($user);
         }
-        if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')){
+        //Si la personne est une personne du service comptable
+        else if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')) {
+            //récupère l'objet statut Validé par le comptable
+            $status= $em->getRepository('OrderBundle:Status')->find(3);
             //Set champ localuser_resp_id_user avec l'id de l'utilisateur courrant
             $demand->setValidAccouIdUser($user);
         }
+        else {
+            //Si la personne n'est ni un responsable ni un comptable alors erreur
+            throw $this->createNotFoundException('Vous n\'êtes pas autorisé à effectuer cette action.');
+        }
+        //Set le statut à l'objet demande et effectue la requete
+        $demand->setStatusstatus($status);
         $em->persist($demand);
         $em->flush();
 
-        $idRequiring = $demand->getCreaIdUser();
-        $mail = $em->getRepository('OrderBundle:Localuser')->find($idRequiring);
-        $mail = getEmail($mail);
-        $sendto = $mail;
-
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Validation de la commande '.$idDemand)
-            ->setFrom('orderit.donotreply@gmail.com')
-            ->setTo($sendto)
-            ->setBody($this->renderView('OrderBundle:Demand.email.txt.twig', array('idDemand' => $idDemand, 'corps' => 'La demande a été validé')));
-        $this->get('mailer')->send($message);
 
         //Redirection vers mes listes
         //return $this->redirect($this->generateUrl('my_validation'));
@@ -405,22 +391,12 @@ class DemandController extends Controller
 
         // Si la personne est un responsable
         if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
-
             $status = $em->getRepository('OrderBundle:Status')->find(30);
-            if (!$status) {
-                $status = new Status();
-                $status.setId(30);
-            }
         }
 
         //Si la personne est une personne du service comptable
         if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')) {
             $status = $em->getRepository('OrderBundle:Status')->find(40);
-            if (!$status) {
-                $status = new Status();
-                $status.setId(40);
-                /** or new Status(20) depends on your implementation */
-            }
         }
 
         $demand->setStatusstatus($status);
@@ -444,11 +420,6 @@ class DemandController extends Controller
         }
 
         $status= $em->getRepository('OrderBundle:Status')->find(100);
-        if (!$status) {
-            $status = new Status();
-            $status.setId(100);
-            /** or new Status(20) depends on your implementation */
-        }
 
         $demand->setStatusstatus($status);
         $em->persist($demand);
@@ -473,5 +444,41 @@ class DemandController extends Controller
         ;
     }
 
+    public function sendMail($subject,$mail){
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom('orderit.donotreply@gmail.com')
+            ->setTo($mail)
+            ->setBody('Hello');
+        $this->get('mailer')->send($message);
+    }
+
+    public function giveEmailDemand($demand){
+        $mail = array();
+        //Récupère mail relatif à la demande
+        $em = $this->getDoctrine()->getManager();
+        $demand = $em->getRepository('OrderBundle:Demand')->find($demand);
+        //Si la demand a un createur
+        if ($demand->getCreaIdUser()) {
+            $user = $demand->getCreaIdUser();
+            $user = $em->getRepository('OrderBundle:Localuser')->find($user);
+            $mail[] = $user->getEmail();
+        }
+        //Si la demande à un responsable
+        if ($demand->getValidRespIdUser()) {
+            $user = $demand->getValidRespIdUser();
+            $user = $em->getRepository('OrderBundle:Localuser')->find($user);
+            $mail[] = $user->getEmail();
+        }
+        //Si la demande est attribuée à un memebre de la comptabilité
+        if ($demand->getValidAccouIdUser()) {
+            $user = $demand->getValidAccouIdUser();
+            $user = $em->getRepository('OrderBundle:Localuser')->find($user);
+            $mail[] = $user->getEmail();
+        }
+
+        return $mail;
+    }
 
 }

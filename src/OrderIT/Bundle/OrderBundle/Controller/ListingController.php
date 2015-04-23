@@ -67,7 +67,12 @@ class ListingController extends Controller
             $em->persist($entity);
             $em->flush();
 
-
+            //set le listing current pour la demande
+            $idlisting = $entity->getIdListing();
+            $entity->getDemandDemand()->setidlisting($idlisting);
+            $em->persist($entity);
+            $em->flush();
+            //Redirection vers le nouvel enregistrement
             return $this->redirect($this->generateUrl('listing_show', array('id' => $entity->getIdListing())));
         }
 
