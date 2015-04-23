@@ -115,10 +115,6 @@ class DemandController extends Controller
         $entities = $em->getRepository('OrderBundle:Demand')->findBycreaIdUser($user);
 
 
-        /**if (count($entities) > 1) {
-        throw "Erreur";
-        }**/
-
         return array(
             'entities' => $entities,
         );
@@ -188,6 +184,7 @@ class DemandController extends Controller
      */
     private function createCreateForm(Demand $entity)
     {
+
         $form = $this->createForm(new DemandType(), $entity, array(
             'action' => $this->generateUrl('demand_create'),
             'method' => 'POST',
@@ -342,8 +339,12 @@ class DemandController extends Controller
         $demandnumber = $demand->getNumeroDemand();
         //on constitue le sujet du mail
         $subject = 'Validation de la commande '.$demandnumber;
+        //On décrit l'action accomplie pour le mail
+        $action = "Validée";
+        //Renseigne sur qui a validé la demande
+        $username = $user->getUsername();
         //On appelle la fonction qui envoie le mail
-        $this->sendMail($subject,$mail);
+        $this->sendMail($subject,$mail,$demandnumber,$action, $username);
         if (!$demand) {
             throw $this->createNotFoundException('Unable to find Demand entity.');
         }
@@ -372,38 +373,9 @@ class DemandController extends Controller
 
 
         //Redirection vers mes listes
-        //return $this->redirect($this->generateUrl('my_validation'));
+        return $this->redirect($this->generateUrl('my_validation'));
     }
 
-    /**
-     * Ask to modifie a Demand entity.
-     *
-     * @Route("/{idDemand}/requestmod", name="demand_requestmod")
-     * @Method("GET")
-     */
-    public function RequestModAction($idDemand)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
-        if (!$demand) {
-            throw $this->createNotFoundException('Unable to find Demand entity.');
-        }
-
-        // Si la personne est un responsable
-        if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
-            $status = $em->getRepository('OrderBundle:Status')->find(30);
-        }
-
-        //Si la personne est une personne du service comptable
-        if ($this->get('security.context')->isGranted('ROLE_ACCOUNTING')) {
-            $status = $em->getRepository('OrderBundle:Status')->find(40);
-        }
-
-        $demand->setStatusstatus($status);
-        $em->persist($demand);
-        $em->flush();
-        return $this->redirect($this->generateUrl('//comment_new'));
-    }
 
     /**
      * Deletes a Demand entity.
@@ -414,7 +386,24 @@ class DemandController extends Controller
     public function deleteAction($idDemand)
     {
         $em = $this->getDoctrine()->getManager();
+        //récupère l'id de l'user courant
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $user->getId();
+        $user = $em->getRepository('OrderBundle:Localuser')->find($user);
+        //Set objet demand
         $demand = $em->getRepository('OrderBundle:Demand')->find($idDemand);
+        //Récupère le mail des personnes ayant un role dans la demande
+        $mail = $this->giveEmailDemand($demand);
+        //Récupère le numéro de la commande
+        $demandnumber = $demand->getNumeroDemand();
+        //on constitue le sujet du mail
+        $subject = 'Annulation de la commande '.$demandnumber;
+        //On décrit l'action accomplie pour le mail
+        $action = "Annulée";
+        //Renseigne sur qui a validé la demande
+        $username = $user->getUsername();
+        //On appelle la fonction qui envoie le mail
+        $this->sendMail($subject,$mail,$demandnumber,$action, $username);
         if (!$demand) {
             throw $this->createNotFoundException('Unable to find Demand entity.');
         }
@@ -424,7 +413,7 @@ class DemandController extends Controller
         $demand->setStatusstatus($status);
         $em->persist($demand);
         $em->flush();
-        return $this->redirect($this->generateUrl('listing'));
+        return $this->redirect($this->generateUrl('demand'));
     }
 
     /**
@@ -444,13 +433,15 @@ class DemandController extends Controller
         ;
     }
 
-    public function sendMail($subject,$mail){
+    public function sendMail($subject,$mail,$demandnumber,$action, $username){
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom('orderit.donotreply@gmail.com')
             ->setTo($mail)
-            ->setBody('Hello');
+            ->setBody($this->renderView('OrderBundle:Mail:new.html.twig', array('demandnumber' => $demandnumber,
+                                                                                'action' => $action,
+                                                                                'username' => $username)));
         $this->get('mailer')->send($message);
     }
 

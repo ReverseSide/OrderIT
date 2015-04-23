@@ -16,11 +16,10 @@ class DemandType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
         $builder
-            ->add('numeroDemand','text', array(
-                'label'  => 'Numero de demande',
-                'attr'   =>  array(
-                'class'   => 'input-sm')))
+
             ->add('projectProject', new ProjectType())
             ->add('deliveryDelivery', new DeliveryType(array(
                 'label'  => 'Adresse de livraison')))

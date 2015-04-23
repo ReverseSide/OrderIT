@@ -2,14 +2,12 @@
 {% block body -%}
     <h1>Créer une nouvelle commmande</h1><br>
 
-   {# {{ form(form) }}#}
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
     <div id="DemandInfo" class="col-md-5">
         <div class="col-lg-11">
-            {{ form_row(form.demandDemand.numeroDemand) }}
             {{ form_row(form.demandDemand.projectProject) }}
             <div id="DemandDelivery">
                 {{ form_row(form.demandDemand.deliveryDelivery) }}

@@ -90,8 +90,16 @@ class CommentController extends Controller
      */
     public function newAction($idlisting)
     {
+        $em = $this->getDoctrine()->getManager();
         $entity = new Comment();
-        $entity->setListingListing($idlisting);
+        //Set l'utilisateur courrant
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $user->getId();
+        $user = $em->getRepository('OrderBundle:Localuser')->find($user);
+        $entity->setIdUser($user);
+        //Set l'id du listing correspondant au commentaire
+        $listing = $em->getRepository('OrderBundle:Listing')->find($idlisting);
+        $entity->setListingListing($listing);
         $form   = $this->createCreateForm($entity);
 
         return array(

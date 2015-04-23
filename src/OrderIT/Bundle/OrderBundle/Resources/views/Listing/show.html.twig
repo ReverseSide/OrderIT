@@ -98,7 +98,7 @@
             {# Affiche le bouton demande une modificaiton
             Si l'utilisateur est une personne responsalbe ou de la comptabilité et que la commande n'a pas été validée à ce niveau #}
                 <li>
-                    <a class="btn btn-warning glyphicon glyphicon-indent-right" href="{{ path('demand_requestmod', { 'idDemand': entity.demandDemand.idDemand }) }}">
+                    <a class="btn btn-warning glyphicon glyphicon-indent-right" href="{{ path('comment_new', { 'idlisting': entity.idListing }) }}">
                         Demande de modification
                     </a>
                 </li>

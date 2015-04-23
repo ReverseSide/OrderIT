@@ -19,6 +19,7 @@ class CommentType extends AbstractType
             ->add('comment')
             ->add('creaComment')
             ->add('listingListing')
+            ->add('commenter', 'submit')
         ;
     }
     

@@ -59,8 +59,15 @@ class ListingController extends Controller
             $user = $this->container->get('security.context')->getToken()->getUser();
             $user = $user->getId();
             $em = $this->getDoctrine()->getManager();
-            //set le statut à 1
-            $status= $em->getRepository('OrderBundle:Status')->find(1);
+            // Si la personne est un responsable la commande est directement validé à ce niveau
+            if ($this->get('security.context')->isGranted('ROLE_VALIDATOR')) {
+                //récupère l'objet statut Validé par le responsable
+                $status= $em->getRepository('OrderBundle:Status')->find(2);
+            }
+            else if ($this->get('security.context')->isGranted('ROLE_REQUIRING')) {
+                //set le statut à 1
+                $status = $em->getRepository('OrderBundle:Status')->find(1);
+            }
             $entity->getDemandDemand()->setStatusstatus($status);
             $usercreat= $em->getRepository('OrderBundle:Localuser')->find($user);
             $entity->getDemandDemand()->setCreaIdUser($usercreat);
@@ -70,6 +77,14 @@ class ListingController extends Controller
             //set le listing current pour la demande
             $idlisting = $entity->getIdListing();
             $entity->getDemandDemand()->setidlisting($idlisting);
+
+            //Cree le numero de commande avec l'acronyme et numero
+            $acronyme = $this->generateAcronyme();
+
+
+            $entity->getDemandDemand()->setNumeroDemand($acronyme);
+
+
             $em->persist($entity);
             $em->flush();
             //Redirection vers le nouvel enregistrement
@@ -299,4 +314,26 @@ class ListingController extends Controller
         ;
     }
 
+    public function generateAcronyme(){
+
+        $em = $this->getDoctrine()->getManager();
+        //récupère l'id de l'user courant
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $user->getId();
+        $user = $em->getRepository('OrderBundle:Localuser')->find($user);
+        //récupère son nom.prenom
+        $username = $user->getUsername();
+        //son prenom se trouve avant le .
+        $lastname = strstr($username,'.');
+        //Après le . on garde que le premier caractère du nom de famille
+        $flettreoflastname = substr($lastname, 1, 1);
+        //On garde que les deux premières lettres du prenom et le colle à la première lettre du nom de famille
+        $acronyme = substr($username, 0, 2).$flettreoflastname;
+        //On passe l'acronyme en majuscule
+        $acronyme = strtoupper($acronyme);
+        $resultat = count($em->getRepository('OrderBundle:Demand')->findBycreaIdUser($user));
+        //Complete pour que la chaine de chiffre fasse 5 avec des 0
+        $number = str_pad($resultat, 5, "0", STR_PAD_LEFT);
+        return $acronyme.$number;
+    }
 }

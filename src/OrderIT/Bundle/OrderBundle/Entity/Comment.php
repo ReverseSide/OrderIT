@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Comment
  *
- * @ORM\Table(name="comment", indexes={@ORM\Index(name="fk_comment_list1_idx", columns={"listing_id_listing"})})
+ * @ORM\Table(name="comment", indexes={@ORM\Index(name="fk_comment_list1_idx", columns={"listing_id_listing"}),@ORM\Index(name="fk_comment_localuser_idx", columns={"id_user"})})
  * @ORM\Entity
  */
 class Comment
@@ -26,9 +26,12 @@ class Comment
     private $idComment;
 
     /**
-     * @var integer
+     * @var \Localuser
      *
-     * @ORM\Column(name="id_user", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Localuser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
      */
     private $idUser;
 

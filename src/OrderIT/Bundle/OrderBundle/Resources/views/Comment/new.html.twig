@@ -1,8 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Commenter la demande de modification</h1>
+    <h1>Commenter la demande de modification de la commande</h1>
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.comment) }}
+    {{ form_row(form.commenter) }}
 
 {% endblock %}
