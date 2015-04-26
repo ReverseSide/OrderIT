@@ -45,7 +45,9 @@ assetic:
     use_controller: true
 
 swiftmailer:
+    #En face de développement tout les mails sont envoyé à
     delivery_address: orderit.donotreply@gmail.com
+    #Avec l'adresse mail
     transport: gmail
     username:  orderit.donotreply@gmail.com
     password:  Exodia2015

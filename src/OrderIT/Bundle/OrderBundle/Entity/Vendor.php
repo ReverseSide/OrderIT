@@ -49,10 +49,8 @@ class Vendor
      */
     private $postcode;
 
-
-
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="locality", type="string", length=45, nullable=true)
      */
@@ -64,7 +62,6 @@ class Vendor
      *
      * @ORM\Column(name="telephone", type="integer", nullable=true)
      */
-
     private $telephone;
 
     /**

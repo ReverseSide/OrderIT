@@ -314,6 +314,12 @@ class ListingController extends Controller
         ;
     }
 
+
+    /**
+     * Fonction qui permet de générer l'acronyme et le numero de demande
+     *
+     *
+     */
     public function generateAcronyme(){
 
         $em = $this->getDoctrine()->getManager();

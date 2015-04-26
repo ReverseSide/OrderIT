@@ -15,8 +15,8 @@ security:
         #On fourmit en chaine les fournisseurs d'identification
         chain_provider:
             chain:
-                #D'habord le local puis sur LDAP
-                providers: [fos_userbundle, fr3d_ldapbundle]
+                #Uniquement en local dans la version rendue aux experts
+                providers: [fos_userbundle]
         #Chemin des services d'identificaiton
         fr3d_ldapbundle:
             id: fr3d_ldap.security.user.provider
@@ -39,7 +39,7 @@ security:
                 csrf_provider: form.csrf_provider
                 always_use_default_target_path: true
                 #Redirection par défaut après identification
-                default_target_path: /demand
+                default_target_path: /
             logout: true
             anonymous: true
 

@@ -35,7 +35,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=45, nullable=true)
+     * @ORM\Column(name="description", type="string", length=145, nullable=true)
      */
     private $description;
 

@@ -50,6 +50,14 @@ class Delivery
     private $postcode;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="locality", type="string", length=45, nullable=true)
+     */
+
+    private $locality;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="telephone", type="integer", nullable=true)
@@ -72,8 +80,6 @@ class Delivery
      *
      * @return integer
      */
-
-
     public function getIdDelivery()
     {
         return $this->idDelivery;
@@ -169,6 +175,29 @@ class Delivery
     public function getPostcode()
     {
         return $this->postcode;
+    }
+
+    /**
+     * Set locality
+     *
+     * @param string $locality
+     * @return Vendor
+     */
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    /**
+     * Get locality
+     *
+     * @return string
+     */
+    public function getlocality()
+    {
+        return $this->locality;
     }
 
     /**

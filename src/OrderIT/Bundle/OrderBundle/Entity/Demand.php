@@ -34,9 +34,16 @@ class Demand
     /**
      * @var string
      *
-     * @ORM\Column(name="numero_demand", type="string", length=8, nullable=false)
+     * @ORM\Column(name="numero_demand", type="string", length=8, nullable=true)
      */
     private $numeroDemand;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_client", type="string", length=15, nullable=true)
+     */
+    private $numberclient;
 
     /**
      * @var \DateTime
@@ -253,6 +260,29 @@ class Demand
     public function getNumeroDemand()
     {
         return $this->numeroDemand;
+    }
+
+    /**
+     * Set numberclient
+     *
+     * @param string $numberclient
+     * @return Demand
+     */
+    public function setNumberClient($numberclient)
+    {
+        $this->numberclient = $numberclient;
+
+        return $this;
+    }
+
+    /**
+     * Get numberclient
+     *
+     * @return string
+     */
+    public function getNumberClient()
+    {
+        return $this->numberclient;
     }
 
     /**

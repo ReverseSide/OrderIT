@@ -19,6 +19,7 @@ class DeliveryType extends AbstractType
             ->add('postoffice')
             ->add('adress')
             ->add('postcode')
+            ->add('locality')
             ->add('telephone')
             ->add('fax')
         ;

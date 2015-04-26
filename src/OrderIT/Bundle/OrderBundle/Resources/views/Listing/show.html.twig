@@ -4,14 +4,16 @@
     <h1>Détaille de la commande</h1>
     <div id="Livraison" class="col-md-5" >
         Numero de commande : {{ entity.demandDemand.numeroDemand }}<br>
-        Nom du projet : {{ entity.demandDemand.projectProject.project }}<br><br>
+        Nom du projet : {{ entity.demandDemand.projectProject.project }}<br>
+        Numéro de client : {{ entity.demandDemand.numberclient }}<br><br>
         <h5>Lieu de livraison :</h5>
         {{ entity.demandDemand.deliveryDelivery.name }}<br>
         Case Postal {{ entity.demandDemand.deliveryDelivery.postoffice }}<br>
         {{ entity.demandDemand.deliveryDelivery.adress }}<br>
-        {{ entity.demandDemand.deliveryDelivery.postcode }}<br>
-        {{ entity.demandDemand.deliveryDelivery.telephone }}<br>
-        {{ entity.demandDemand.deliveryDelivery.fax }}<br>
+        {{ entity.demandDemand.deliveryDelivery.postcode }}
+        {{ entity.demandDemand.deliveryDelivery.locality }}<br>
+        +41 (0){{ entity.demandDemand.deliveryDelivery.telephone }}<br>
+        +41 (0){{ entity.demandDemand.deliveryDelivery.fax }}<br>
     </div>
 
     <div id="Fournisseur" class="col-md-6" >
@@ -22,10 +24,10 @@
             {{ entity.demandDemand.VendorVendor.adress }}<br>
             {{ entity.demandDemand.VendorVendor.postcode }}
             {{ entity.demandDemand.VendorVendor.locality }}<br>
-            {{ entity.demandDemand.VendorVendor.telephone }}<br>
-            {{ entity.demandDemand.VendorVendor.fax }}<br>
+            +41 (0){{ entity.demandDemand.VendorVendor.telephone }}<br>
+            +41 (0){{ entity.demandDemand.VendorVendor.fax }}<br>
     </div>
-    <div id="Article" class="col-md-10">
+    <div id="Article" class="col-md-8">
         <br>A l'attention de: {{ entity.demandDemand.creaIdUser }}<br>
                 Selon offre réf.
                 {{ entity.demandDemand.referenceReference.reference }} du
@@ -50,38 +52,31 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div id="DemandCompta" class="col-md-8">
             <br>YVERDON-LES-BAINS, le {{ entity.demandDemand.modDemand |date('d-m-Y') }}<br>
-        <div id="DemandCompta" class="col-md-12">
-            <div class="col-lg-12">
-                <h4>Observation : </h4>{{ entity.demandDemand.observation }}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <h3 class="panel-title">Observation</h3>
+                </div>
+                <div class="panel-body">
+                    {{ entity.demandDemand.observation }}
+                </div>
             </div>
-            <div class="col-lg-4">
-                <strong> Proco : </strong>{{ entity.demandDemand.procoProco }}
-            </div>
-            <div class="col-lg-4">
-                <strong> Labo : </strong>{{ entity.demandDemand.laboLabo }}
-            </div>
-            <div class="col-lg-5">
-                <strong> Oracle : </strong>{{ entity.demandDemand.oracleOracle}}
-            </div>
-            <div class="col-lg-2">
-                <strong> Centre de coût : </strong>{{ entity.demandDemand.costcentreCostcentre }}
-            </div>
-            <div class="col-lg-1">
-                <strong> H : </strong>{{ entity.demandDemand.hfield }}
-            </div>
-            <div class="col-lg-2">
-                <strong> Filière : </strong>{{ entity.demandDemand.sectorSector }}
-            </div>
-            <div class="col-lg-2">
-                <strong> Montant : </strong>{{ entity.demandDemand.amount }}
-            </div>
+            <h5 class="col-lg-4"><span class="label label-default">Proco</span><span class="panel panel-default"> {{ entity.demandDemand.procoProco }} </span></h5>
+            <h5 class="col-lg-2"><span class="label label-default">Labo</span><span class="panel panel-default"> {{ entity.demandDemand.laboLabo }} </span></h5>
+            <h5 class="col-lg-4"><span class="label label-default">Oracle</span><span class="panel panel-default"> {{ entity.demandDemand.oracleOracle}} </span></h5>
+            <h5 class="col-lg-4"><span class="label label-default">Centre de coût</span><span class="panel panel-default"> {{ entity.demandDemand.costcentreCostcentre }}</span></h5>
+            <h5 class="col-lg-2"><span class="label label-default">H</span><span class="panel panel-default"> {{ entity.demandDemand.hfield }} </span></h5>
+            <h5 class="col-lg-2"><span class="label label-default">Filière</span><span class="panel panel-default"> {{ entity.demandDemand.sectorSector }} </span></h5>
+            <h4 class="col-lg-4 text-primary"><span class="label label-default">Montant</span><span class="panel panel-default"> {{ entity.demandDemand.amount }} </span></h4>
         </div>
     </div>
-    <div id="Action" class="col-md-10 pull-right">
-        <ul class="record_actions list-inline">
+    <div id="Action" class="col-md-8 ">
+        <ul class="record_actions list-inline pull-right">
+            <br>
             <li>
-                <a class="btn btn-primary glyphicon glyphicon glyphicon-share-alt" href="{{ path('listing') }}">
+                <a class="btn btn-primary glyphicon glyphicon-chevron-left" href="{{ path('default') }}">
                     Retour
                 </a>
             </li>
@@ -105,7 +100,7 @@
             {% endif %}
             {% if ((is_granted('ROLE_VALIDATOR')) and (entity.demandDemand.statusstatus.idStatus == 1 )) or ((is_granted('ROLE_ACCOUNTING')) and (entity.demandDemand.statusstatus.idStatus == 2 )) %}
                 <li>
-                <a class="btn btn-success glyphicon glyphicon glyphicon-ok" href="{{ path('demand_valid', { 'idDemand': entity.demandDemand.idDemand }) }}">
+                <a class="btn btn-success glyphicon glyphicon-ok" href="{{ path('demand_valid', { 'idDemand': entity.demandDemand.idDemand }) }}">
                     Valider
                 </a>
             </li>
@@ -114,7 +109,7 @@
                 Si l'utilisateur est une personne responsalbe ou de la comptabilité et que la commande n'a pas été validée à ce niveau #}
             {% if ((is_granted('ROLE_VALIDATOR')) and (entity.demandDemand.statusstatus.idStatus == 1 )) or ((is_granted('ROLE_ACCOUNTING')) and (entity.demandDemand.statusstatus.idStatus == 3 )) %}
                 <li>
-                    <a class="btn btn-danger glyphicon glyphicon glyphicon-trash" href="{{ path('demand_delete', { 'idDemand': entity.demandDemand.idDemand }) }}">
+                    <a class="btn btn-danger glyphicon glyphicon-trash" href="{{ path('demand_delete', { 'idDemand': entity.demandDemand.idDemand }) }}">
                         Annuler
                     </a>
                 </li>
@@ -122,7 +117,7 @@
             {# Si l'utilisateur est une personne de la comptabilité #}
             {% if is_granted('ROLE_ACCOUNTING') %}
                 <li>
-                    <a class="btn btn-default glyphicon glyphicon glyphicon-print" href="{{ path('listing_pdf', { 'id': entity.idListing }) }}">
+                    <a class="btn btn-default glyphicon glyphicon-print" href="{{ path('listing_pdf', { 'id': entity.idListing }) }}">
                         Imprimer
                     </a>
                 </li>

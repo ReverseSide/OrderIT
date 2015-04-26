@@ -14,6 +14,13 @@
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
             <div class="navbar-header">
+                {# Permet de crée le menu mobile#}
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="#">
                     <strong>Order</strong>IT
                 </a>
@@ -22,25 +29,31 @@
                 <ul class="nav navbar-nav">
                     {# Si l'utilisateur est un responsable ou une personne de service comptable#}
                     {% if is_granted('ROLE_VALIDATOR') or is_granted('ROLE_ACCOUNTING') %}
-                        <li>
+                        <li {% if app.request.attributes.get('_route') == 'demand_open' %}class="active"{% endif %}>
                             <a href="{{ path('demand_open') }}">
                                 Demande ouverte
                             </a>
                         </li>
-                        <li>
+                        <li {% if app.request.attributes.get('_route') == 'my_validation' %}class="active"{% endif %}>
                             <a href="{{ path('my_validation') }}">
-                                Mes validations
+                                Mes suivis
                             </a>
                         </li>
                     {% endif %}
                     {# Si l'utilisateur est un collaborateur requérant ou un responsable#}
                     {% if is_granted('ROLE_REQUIRING') or is_granted('ROLE_VALIDATOR') %}
-                        <li>
+                        <li {% if app.request.attributes.get('_route') == 'mydemand' %}class="active"{% endif %}>
                             <a href="{{ path('mydemand') }}">
                                 Mes demandes
                             </a>
                         </li>
-                        <li><a href="{{ path('listing_new') }}">
+                        <li {% if app.request.attributes.get('_route') == 'need_modification' %}class="active"{% endif %}>
+                            <a href="{{ path('need_modification') }}">
+                                Demande soumise à modification
+                            </a>
+                        </li>
+                        <li {% if app.request.attributes.get('_route') == 'listing_new' %}class="active"{% endif %}>
+                            <a href="{{ path('listing_new') }}">
                                 Nouvelle Demande
                             </a>
                         </li>

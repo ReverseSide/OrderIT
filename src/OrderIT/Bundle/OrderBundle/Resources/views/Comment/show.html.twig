@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Commenter la commande</h1>
+    <h1>Commentaire sur la demande</h1>
 
     <table class="record_properties">
         <tbody>
@@ -26,15 +26,9 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('comment') }}">
-            Back to the list
+        <a class="btn btn-primary glyphicon glyphicon glyphicon-chevron-left" href="{{ path('my_validation') }}">
+            Retour au suivi
         </a>
     </li>
-    <li>
-        <a href="{{ path('comment_edit', { 'id': entity.idComment }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

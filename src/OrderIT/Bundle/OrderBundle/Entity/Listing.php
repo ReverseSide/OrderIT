@@ -156,4 +156,5 @@ class Listing
     {
         return $this->articleArticle;
     }
+
 }

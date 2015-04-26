@@ -1,5 +1,10 @@
 
 La demande {{ demandnumber }} a été {{ action }} par {{ username }}
 
+{% if commentaire %}
+Voici le commentaire que {{ username }} a laissé à propos de cette commande :
+    {{ commentaire }}
+{% endif %}
+
 Ceci est un mail automatique, merci de ne pas y répondre
 

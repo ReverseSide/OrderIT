@@ -1,15 +1,29 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Liste des commandes</h1>
+    {% for flashMessage in app.session.flashbag.get('info') %}
+        <div class="alert alert-info" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    {% if app.request.get('_route') == 'mydemand' %}
+        <h1>Liste de mes commandes</h1>
+    {% endif %}
+    {% if app.request.get('_route') == 'demand_open' %}
+        <h1>Liste commandes ouvertes</h1>
+    {% endif %}
+    {% if app.request.get('_route') == 'my_validation' %}
+        <h1>Liste commandes suivies</h1>
+    {% endif %}
     <br>
     <table class="table table-responsive table-striped">
         <thead class="records_list">
             <tr>
                 <th>Numero de commande</th>
+                <th>Nom du projet</th>
                 <th>Statut</th>
                 <th>Requerant</th>
-                <th>Validé par</th>
+                <th>Pris en charge par</th>
                 <th>Comptabilisé par</th>
                 <th>Date de création</th>
                 <th>Date de modification</th>
@@ -21,6 +35,7 @@
         {% for entity in entities %}
             <tr>
                 <td>{{ entity.numeroDemand }}</td>
+                <td>{{ entity.projectProject }}</td>
                 <td>{{ entity.statusstatus }}</td>
                 <td>{{ entity.creaIdUser }}</td>
                 <td>{% if entity.validRespIduser %}{{ entity.validRespIdUser }}{% endif %}</td>

@@ -10,6 +10,3 @@ fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /profile
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation

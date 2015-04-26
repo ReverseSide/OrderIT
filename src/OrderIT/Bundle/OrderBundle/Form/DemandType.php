@@ -21,9 +21,8 @@ class DemandType extends AbstractType
         $builder
 
             ->add('projectProject', new ProjectType())
-            ->add('deliveryDelivery', new DeliveryType(array(
-                'label'  => 'Adresse de livraison')))
-            #->add('vendorVendor')
+            ->add('numberclient')
+            ->add('deliveryDelivery', new DeliveryType())
             ->add('vendorVendor', new VendorType())
             ->add('referenceReference')
             ->add('referenceDate')
@@ -35,12 +34,6 @@ class DemandType extends AbstractType
             ->add('oracleOracle')
             ->add('procoProco')
             ->add('sectorSector')
-            #->add('statusstatus')
-            #->add('creaIdUser')
-            #->add('validRespIdUser')
-            #->add('validAccouIdUser')
-            #->add('creaDemand')
-            #->add('modDemand')
         ;
     }
     

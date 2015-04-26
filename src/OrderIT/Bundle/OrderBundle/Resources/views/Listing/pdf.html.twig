@@ -9,7 +9,7 @@
         <div class="pull-left">
             <img src="{{ asset('bundles/order/images/vaud_logo.jpg', absolute=true) }}" alt="Canton de vaud" height="150">
         </div>
-        <div class="pull-left">
+        <div class="pull-left col-md-5">
         HAUTE ECOLE D'INGENIERIE ET DE GESTION<br>
         DU CANTON DE VAUD (HEIG-VD)<br><br>
 
@@ -20,35 +20,40 @@
         TELEFAX: +41 (0)24 557 64 04<br>
         CHE- 116.015.309 TVA<br>
         </div>
-        <div id="Fournisseur" class="left10 pull-left">
+        <div id="Fournisseur" class="pull-left">
 
-            <h5>FOURNISSEUR</h5>
+            <strong>FOURNISSEUR</strong><br>
             {{ entity.demandDemand.VendorVendor.name }}<br>
             Case Postal {{ entity.demandDemand.VendorVendor.postofficebox }}<br>
             {{ entity.demandDemand.VendorVendor.adress }}<br>
             {{ entity.demandDemand.VendorVendor.postcode }}
             {{ entity.demandDemand.VendorVendor.locality }}<br>
-            {{ entity.demandDemand.VendorVendor.telephone }}<br>
-            {{ entity.demandDemand.VendorVendor.fax }}<br>
+            +41 (0) {{ entity.demandDemand.VendorVendor.telephone }}<br>
+            +41 (0) {{ entity.demandDemand.VendorVendor.fax }}<br><br><br><br>
         </div>
     </div>
-    <div id="Livraison" class="clearfix">
+    <div id="Livraison" class="col-md-5">
         <h2>COMMANDE No {{ entity.demandDemand.numeroDemand }}</h2><br>
-        Nom du projet : {{ entity.demandDemand.projectProject.project }}<br><br>
-        <h5>Lieu de livraison :</h5>
-        {{ entity.demandDemand.deliveryDelivery.name }}<br>
-        Case Postal {{ entity.demandDemand.deliveryDelivery.postoffice }}<br>
-        {{ entity.demandDemand.deliveryDelivery.adress }}<br>
-        {{ entity.demandDemand.deliveryDelivery.postcode }}<br>
-        {{ entity.demandDemand.deliveryDelivery.telephone }}<br>
-        {{ entity.demandDemand.deliveryDelivery.fax }}<br>
+        <strong>Nom du projet : </strong>{{ entity.demandDemand.projectProject.project }}<br>
+        <strong>Numéro de client : </strong>{{ entity.demandDemand.numberclient }}<br>
+
+        <div id="adresse" class="col-md-5">
+            <strong>Lieu de livraison</strong><br>
+            {{ entity.demandDemand.deliveryDelivery.name }}<br>
+            Case Postal {{ entity.demandDemand.deliveryDelivery.postoffice }}<br>
+            {{ entity.demandDemand.deliveryDelivery.adress }}<br>
+            {{ entity.demandDemand.deliveryDelivery.postcode }}
+            {{ entity.demandDemand.deliveryDelivery.locality }}<br>
+            +41 (0) {{ entity.demandDemand.deliveryDelivery.telephone }}<br>
+            +41 (0) {{ entity.demandDemand.deliveryDelivery.fax }}<br>
+        </div>
     </div>
 
     <div id="Article">
-        <br>A l'attention de: {{ entity.demandDemand.creaIdUser }}<br>
+        <br>A l'attention de: <strong>{{ entity.demandDemand.creaIdUser }}</strong><br>
                 Selon offre réf.
                 {{ entity.demandDemand.referenceReference.reference }} du
-                {{ entity.demandDemand.referenceDate |date('Y-m-d') }}<br><br>
+                {{ entity.demandDemand.referenceDate |date('Y-m-d') }}
         <table class="records_list table table-striped">
             <thead>
                 <tr>
@@ -63,16 +68,39 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ articles.description }}</td>
-                    <td>{{ entity.demandDemand.idDemand }}</td>
+                    <td>{{ articles.quantity }}</td>
                     <td>{{ articles.numeroarticle }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div id="DemandCompta" class="col-md-8">
             <br>YVERDON-LES-BAINS, le {{ entity.demandDemand.modDemand |date('d-m-Y') }}<br>
-
-                Observations :
-                {{ entity.demandDemand.observation }}
+            <div class="col-lg-6">
+                    <strong>Observation</strong>
+                    {{ entity.demandDemand.observation }}
+            </div>
+            <hr />
+            <div class="pull-right">
+                <span><strong>Visa </strong></span><br>
+                <div class="panel panel-default col-lg-4">
+                    <div class="panel-body">
+                </div>
+                </div>
+            </div>
+            <div class="pull-right">
+                <span class="col-lg-4"><strong>Proco </strong><span> {{ entity.demandDemand.procoProco }} </span></span>
+                <span class="col-lg-4"><strong>Année </strong><span> {{ entity.demandDemand.modDemand |date('Y') }} </span></span>
+                <span class="col-lg-2"><strong>Labo </strong><span> {{ entity.demandDemand.laboLabo }} </span></span><br>
+                <span class="col-lg-4"><strong>Oracle </strong><span> {{ entity.demandDemand.oracleOracle}} </span></span>
+                <span class="col-lg-4"><strong>Centre de coût </strong><span> {{ entity.demandDemand.costcentreCostcentre }}</span></span>
+                <span class="col-lg-1"><strong>H </strong><span> {{ entity.demandDemand.hfield }} </span></span>
+                <span class="col-lg-2"><strong>Filière </strong><span> {{ entity.demandDemand.sectorSector }} </span></span>
+                <span class="col-lg-4"><strong>Montant</strong><span> {{ entity.demandDemand.amount }} CHF</span></span>
+            </div>
+        </div>
+    </div>
+    <div id="Action" class="col-md-8 ">
     </div>
 </head>
 </body>

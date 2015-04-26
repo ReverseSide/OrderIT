@@ -58,7 +58,10 @@ class DemandController extends Controller
 
         //Si il n'y aucun demande
         if (count($entities) == 0) {
-            throw new NotFoundHttpException("Il n'y a pas le moment pas de demande en attente");
+            $this->addFlash(
+                'info',
+                "Il n'y a pas de demande en attente pour le moment"
+            );
         }
         return array(
             //Renvoie les entities
@@ -89,8 +92,11 @@ class DemandController extends Controller
             $entities = $em->getRepository('OrderBundle:Demand')->findByvalidAccouIdUser($user);}
 
         //Si il n'y a pas de demande
-        if (count($entities) == 1) {
-            throw new NotFoundHttpException("Vous n'avez pas encore validé des demandes");
+        if (count($entities) == 0) {
+            $this->addFlash(
+                'info',
+                "Vous n'avez pas encore validé de demande"
+            );
         }
 
         return array(
@@ -112,8 +118,7 @@ class DemandController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OrderBundle:Demand')->findBycreaIdUser($user);
-
+        $entities = $em->getRepository('OrderBundle:Demand')->findBy(array('creaIdUser' => $user, 'statusstatus'=> array(30, 40)));
 
         return array(
             'entities' => $entities,
@@ -138,10 +143,13 @@ class DemandController extends Controller
         $entities = $em->getRepository('OrderBundle:Demand')->findBycreaIdUser($user);
 
 
-        /**if (count($entities) > 1) {
-        throw "Erreur";
-        }**/
-
+        //Si il n'y a pas de demande
+        if (count($entities) == 0) {
+            $this->addFlash(
+                'info',
+                "Vous n'avez pas encore réalisé de demande"
+            );
+        }
         return array(
             'entities' => $entities,
         );
@@ -378,7 +386,7 @@ class DemandController extends Controller
 
 
     /**
-     * Deletes a Demand entity.
+     * Annule la commande
      *
      * @Route("/{idDemand}/delete", name="demand_delete")
      * @Method("GET")
@@ -433,6 +441,13 @@ class DemandController extends Controller
         ;
     }
 
+    /**
+     * Fonction d'envoie de mail
+     *
+     * les parametres permettent de renseigner sur le sujet, les adresses mails, le numero de demande,
+     * l'action accomplie, et le nom de qui a lancé l'action
+     *
+     */
     public function sendMail($subject,$mail,$demandnumber,$action, $username){
 
         $message = \Swift_Message::newInstance()
@@ -444,13 +459,18 @@ class DemandController extends Controller
                                                                                 'username' => $username)));
         $this->get('mailer')->send($message);
     }
-
+    /**
+     * Fonction qui permet de retourner les adresses mail des personnes consernées par la demande
+     *
+     * En paramètre est passé l'id de la commande
+     *
+     */
     public function giveEmailDemand($demand){
         $mail = array();
         //Récupère mail relatif à la demande
         $em = $this->getDoctrine()->getManager();
         $demand = $em->getRepository('OrderBundle:Demand')->find($demand);
-        //Si la demand a un createur
+        //Si la demand a un createur (normalement toujours positif)
         if ($demand->getCreaIdUser()) {
             $user = $demand->getCreaIdUser();
             $user = $em->getRepository('OrderBundle:Localuser')->find($user);
