@@ -20,6 +20,7 @@ class ListingType extends AbstractType
                'type' => new ArticleType(),
                'allow_add' => true,
                'by_reference' => false,))
+            ->add('modifier', 'submit')
         ;
     }
     

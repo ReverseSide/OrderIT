@@ -55,6 +55,9 @@
             {{ form_row(form.demandDemand.amount) }}
         </div>
     </div>
+    <div class="hide">
+        {{ form_row(form.modifier) }}
+    </div>
     <div id="DemandAction" class="col-md-12">
         {{ form_end(form) }}
         <ul class="record_actions list-inline">
@@ -65,6 +68,7 @@
             </li>
         </ul>
     </div>
+
 {#Script pour la création de champs de création d'article#}
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript">

@@ -6,6 +6,11 @@
             {{ flashMessage }}
         </div>
     {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('danger') %}
+        <div class="alert alert-danger" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
     {% if app.request.get('_route') == 'mydemand' %}
         <h1>Liste de mes commandes</h1>
     {% endif %}

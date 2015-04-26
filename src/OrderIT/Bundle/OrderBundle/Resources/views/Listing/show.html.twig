@@ -1,6 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="alert alert-success" role="alert">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
     <h1>Détaille de la commande</h1>
     <div id="Livraison" class="col-md-5" >
         Numero de commande : {{ entity.demandDemand.numeroDemand }}<br>
@@ -107,7 +112,7 @@
             {% endif %}
             {# Affiche le bouton supprimer
                 Si l'utilisateur est une personne responsalbe ou de la comptabilité et que la commande n'a pas été validée à ce niveau #}
-            {% if ((is_granted('ROLE_VALIDATOR')) and (entity.demandDemand.statusstatus.idStatus == 1 )) or ((is_granted('ROLE_ACCOUNTING')) and (entity.demandDemand.statusstatus.idStatus == 3 )) %}
+            {% if (((is_granted('ROLE_REQUIRING')) and (entity.demandDemand.statusstatus.idStatus == 1 )) or (is_granted('ROLE_VALIDATOR')) and (entity.demandDemand.statusstatus.idStatus == 1 )) or ((is_granted('ROLE_ACCOUNTING')) and (entity.demandDemand.statusstatus.idStatus == 3 )) %}
                 <li>
                     <a class="btn btn-danger glyphicon glyphicon-trash" href="{{ path('demand_delete', { 'idDemand': entity.demandDemand.idDemand }) }}">
                         Annuler

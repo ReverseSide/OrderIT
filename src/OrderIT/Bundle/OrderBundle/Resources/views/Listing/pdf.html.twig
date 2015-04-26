@@ -77,8 +77,8 @@
         <div id="DemandCompta" class="col-md-8">
             <br>YVERDON-LES-BAINS, le {{ entity.demandDemand.modDemand |date('d-m-Y') }}<br>
             <div class="col-lg-6">
-                    <strong>Observation</strong>
-                    {{ entity.demandDemand.observation }}
+                <div class="col-lg-6"><strong>Observation</strong></div>
+                <div class="col-lg-6">{{ entity.demandDemand.observation }}</div>
             </div>
             <hr />
             <div class="pull-right">

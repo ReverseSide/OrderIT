@@ -65,16 +65,90 @@
         </div>
     </div>
 
-    <div id="DemandAction" class="col-md-12">
-
-
-        <ul class="record_actions">
+    <div id="Action" class="col-md-8 ">
+        <ul class="record_actions list-inline pull-right">
             <li>
-                <a href="{{ path('listing') }}">
-                    Back to the list
+                <a class="btn btn-primary glyphicon glyphicon-chevron-left" href="{{ path('default') }}">
+                    Retour
                 </a>
             </li>
+            <li>
+                {{ form_row(edit_form.modifier) }}
+            </li>
+            {% if ((is_granted('ROLE_REQUIRING')) and (entity.demandDemand.statusstatus.idStatus == 1 ))%}
             <li>{{ form(delete_form) }}</li>
+            {% endif %}
+
         </ul>
     </div>
+    <div class="hide">
+        {{ form_end(edit_form) }}
+    </div>
+
+    {#Script pour la création de champs de création d'article#}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+            var $container = $('div#orderit_bundle_orderbundle_listing_articleArticle');
+
+            // On ajoute un lien pour ajouter une nouvelle catégorie
+            var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter un article</a>');
+            $container.append($addLink);
+
+            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+            $addLink.click(function(e) {
+                AddArticle($container);
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            if (index == 0) {
+                AddArticle($container);
+            } else {
+                // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+                $container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // La fonction qui ajoute un formulaire Article
+            function AddArticle($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Article n°' + (index+1))
+                        .replace(/__name__/g, index));
+
+                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+                addDeleteLink($prototype);
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                index++;
+            }
+
+            // La fonction qui ajoute un lien de suppression d'un Article
+            function addDeleteLink($prototype) {
+                // Création du lien
+                $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+                // Ajout du lien
+                $prototype.append($deleteLink);
+
+                // Ajout du listener sur le clic du lien
+                $deleteLink.click(function(e) {
+                    $prototype.remove();
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+        });
+    </script>
 {% endblock %}

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use OrderIT\Bundle\OrderBundle\Entity\Demand;
 use OrderIT\Bundle\OrderBundle\Form\DemandType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Demand controller.
@@ -28,6 +29,15 @@ class DemandController extends Controller
      */
     public function indexAction()
     {
+        //Tout les personnes qui ne sont pas administrateur sont redirigée
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $this->addFlash(
+                'danger',
+                "Vous n'êties pas autorisé à accèder à cette page, vous avez été automatiquement redirigié"
+            );
+            return $this->redirect($this->generateUrl('default'));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('OrderBundle:Demand')->findAll();
@@ -46,6 +56,14 @@ class DemandController extends Controller
      */
     public function OpenAction()
     {
+        //Tout les personnes qui ne sont pas validator ou accounting sont redirigée
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_VALIDATOR','ROLE_ACCOUNTING'))) {
+            $this->addFlash(
+                'danger',
+                "Vous n'êties pas autorisé à accèder à cette page, vous avez été automatiquement redirigié"
+            );
+            return $this->redirect($this->generateUrl('default'));
+        }
         $em = $this->getDoctrine()->getManager();
         //Si l'utilisateur est un reponsable alors
         if ($this->get('security.authorization_checker')->isGranted('ROLE_VALIDATOR')) {
@@ -78,6 +96,14 @@ class DemandController extends Controller
      */
     public function MyValidationAction()
     {
+        //Tout les personnes qui ne sont pas validator ou accounting sont redirigée
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_VALIDATOR','ROLE_ACCOUNTING'))) {
+            $this->addFlash(
+                'danger',
+                "Vous n'êties pas autorisé à accèder à cette page, vous avez été automatiquement redirigié"
+            );
+            return $this->redirect($this->generateUrl('default'));
+        }
         //On récupère l'id de l'utilisateur courrant
         $user = $this->container->get('security.context')->getToken()->getUser();
         $user->getId();
@@ -113,13 +139,20 @@ class DemandController extends Controller
      */
     public function NeedModificationAction()
     {
+
         $user = $this->container->get('security.context')->getToken()->getUser();
         $user->getId();
 
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('OrderBundle:Demand')->findBy(array('creaIdUser' => $user, 'statusstatus'=> array(30, 40)));
-
+        //Si il n'y aucun demande
+        if (count($entities) == 0) {
+            $this->addFlash(
+                'info',
+                "Pour le moment aucune de vos demandes ne doit être modifiée"
+            );
+        }
         return array(
             'entities' => $entities,
         );
@@ -333,7 +366,14 @@ class DemandController extends Controller
      */
     public function validAction($idDemand)
     {
-
+        //Tout les personnes qui ne sont pas validator ou accounting sont redirigée
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_VALIDATOR','ROLE_ACCOUNTING'))) {
+            $this->addFlash(
+                'danger',
+                "Vous n'êties pas autorisé à réaliser cette action, vous avez été automatiquement redirigié"
+            );
+            return $this->redirect($this->generateUrl('default'));
+        }
         $em = $this->getDoctrine()->getManager();
         //récupère l'id de l'user courant
         $user = $this->container->get('security.context')->getToken()->getUser();

@@ -31,6 +31,14 @@ class ListingController extends Controller
      */
     public function indexAction()
     {
+        //Tout les personnes qui ne sont pas administrateur sont redirigée
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $this->addFlash(
+                'danger',
+                "Vous n'êties pas autorisé à accèder à cette page, vous avez été automatiquement redirigié"
+            );
+            return $this->redirect($this->generateUrl('default'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('OrderBundle:Listing')->findAll();
@@ -168,6 +176,14 @@ class ListingController extends Controller
      */
     public function PdfAction($id)
     {
+        //Tout les personnes qui ne sont pas validator ou accounting sont redirigée
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ACCOUNTING')) {
+            $this->addFlash(
+                'danger',
+                "Vous n'êties pas autorisé à réaliser cette action, vous avez été automatiquement redirigié"
+            );
+            return $this->redirect($this->generateUrl('default'));
+        }
         $em = $this->getDoctrine()->getManager();
         //Entity est égal à l'enregistrement $id
         $entity = $em->getRepository('OrderBundle:Listing')->find($id);
@@ -262,7 +278,12 @@ class ListingController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('listing_edit', array('id' => $id)));
+            $this->addFlash(
+                'success',
+                "La modification a été enregistrée avec succès "
+            );
+
+            return $this->redirect($this->generateUrl('listing_show', array('id' => $id)));
         }
 
         return array(
